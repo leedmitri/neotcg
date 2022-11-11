@@ -8,8 +8,8 @@ A Neocities friendly setup for Colors TCG.
 - Sorting Cards by
      - Color
      - Search bar inputs
-     - Trading & keeping piles
-     - Newest traders and newest keeps
+     - Trading, keeping, and future piles
+     - Newest traders, newest keeps, and newest future cards
      - Alphabetically
      - Cards that start with 0-M, N-Z sections
      - Text form
