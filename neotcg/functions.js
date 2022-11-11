@@ -977,6 +977,13 @@ function searchShowing(){
     }
 }
 
+function setCredits(){
+    document.getElementById("creditscontainer").innerHTML = 
+        `
+        <p><a href="https://github.com/leedmitri/neotcg">neotcg</a> by <a href="https://gloomlee.neocities.org/">gloomlee</a></p>
+        `;
+}
+
 function setWebsiteHeader(){
     document.getElementById("websiteheadercontainer").innerHTML = 
         `
