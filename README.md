@@ -15,9 +15,9 @@ A Neocities friendly setup for Colors TCG.
      - Text form
 - Levels
 - Masteries
-- Needed cards based on set decks
+- All ISO decks displayed color coded with links to their Colors TCG deck page.
+- Needed cards based on ISO decks decks
 - Priority decks displayed in grid format with cards you own and placeholders
-- All ISO decks colorcoded with links to their Colors TCG deck page.
 - Pending trades
 
 An example setup can be seen [here](https://gloomlee.neocities.org/colorstcg/neotcgexample/).
