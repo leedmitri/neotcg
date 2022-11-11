@@ -32,7 +32,7 @@ Contains a single variable "tradingcards" that holds a string of comma seperated
 
 The format for the variable is:
 ```
-var tradingcards = "card01, card02, card03";
+var keepingcards = "card01, card02, card03";
 ```
 
 ## UPDATElogs.js
