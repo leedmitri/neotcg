@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=100%, initial-scale=.4">
+        <title>future cards 0-M</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEcolorstcgdeckdata.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEtradingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEfuturecards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                setCredits();
+                insertImages("future", "0M"); //fullcollectioncontainer
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            <p><b>0-M future cards</b></p>
+            <p>duplicates:</p>
+            <textarea id="duplicatestextarea"></textarea>
+            
+            <div>
+                <p style="display:inline-block;">show color:</p>
+                <input type="checkbox" id="showAll" name= "input" value="sort" checked>
+                <label for="showAll">all</label>
+                <input type="checkbox" id="showRed" name= "input" value="sort">
+                <label for="showRed">red</label>
+                <input type="checkbox" id="showOrange" name= "input" value="sort">
+                <label for="showOrange">orange</label>
+                <input type="checkbox" id="showYellow" name= "input" value="sort">
+                <label for="showYellow">yellow</label>
+                <input type="checkbox" id="showGreen" name= "input" value="sort">
+                <label for="showGreen">green</label>
+                <input type="checkbox" id="showBlue" name= "input" value="sort">
+                <label for="showBlue">blue</label>
+                <input type="checkbox" id="showPurple" name= "input" value="sort">
+                <label for="showPurple">purple</label>
+                <input type="checkbox" id="showBrown" name= "input" value="sort">
+                <label for="showBrown">brown</label>
+                <input type="checkbox" id="showGrey" name= "input" value="sort">
+                <label for="showGrey">grey</label>
+                <input type="checkbox" id="showSpecial" name= "input" value="sort">
+                <label for="showSpecial">special</label>
+
+                <!--<p style="display:inline-block; margin-left: 40px;">sort by</p>
+                <input type="radio" id="sortbyall" name= "input" value="sort" checked>
+                <label for="sortbyall">all</label>
+                <input type="radio" id="sortbycolors" name= "input" value="sort">
+                <label for="sortbycolors">colors</label>
+                <input type="radio" id="sortbyseries" name= "input" value="sort">
+                <label for="sortbyseries">series</label>-->
+
+                <button onclick="filter()" style="padding: 10px; margin-left: 30px;">filter</button>
+
+                <br>
+
+                <p>search by card name, deck name, or series:</p>
+                <input id="searchbar" onkeyup="filter()" type="text"
+                name="search" placeholder="search...">
+            </div>
+
+            <div id="fullcollectioncontainer">
+            </div>
+            
+        </div>
+        
+        <div id="creditscontainer"> <!-- DO NOT REMOVE -->
+        </div>
+        </center>
+    </body>
+</html>

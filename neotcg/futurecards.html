@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=100%, initial-scale=.4">
+        <title>future cards</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEkeepingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEfuturecards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATElogs.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                setCredits();
+                fillNewCardsContainer("future"); //newcardscontainer
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            <p><b>future cards<br></b></p>
+            <div>
+                <a href="futurecardsall.html">all</a>
+                <a href="futurecards0-M.html">0-M</a>
+                <a href="futurecardsN-Z.html">N-Z</a>
+            </div>
+            <p><b>new future cards<br></b></p>
+           <div id="newcardscontainer"></div>
+        </div>
+        
+        <div id="creditscontainer"> <!-- DO NOT REMOVE -->
+        </div>
+        </center>
+    </body>
+</html>

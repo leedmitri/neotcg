@@ -257,7 +257,7 @@ function fillLogs(){
 
 // INSERTS INTO totalcardscontainer
 function fillTotalCards(){
-    var totalcards = getKeepingCards().length + getTradingCards().length;
+    var totalcards = getKeepingCards().length + getTradingCards().length + getFutureCards().length;
     var levelString = "";
     if (totalcards > 14401){
         var modifier = Math.floor((totalCards % 14401) / 3) ;
@@ -355,7 +355,8 @@ function fillNewCardsContainer(type){
     var numCardsShown;
     
     if (type == "keep"){ cardsFromType = getKeepingCards(); }
-    else { cardsFromType = getTradingCards(); }
+    else if ( type == "trading") { cardsFromType = getTradingCards(); }
+    else { cardsFromType = getFutureCards(); }
 
     if (cardsFromType.length < 100){
         numCardsShown = cardsFromType.length;
@@ -593,6 +594,18 @@ function getLogs(){
     return logs.split("\n");
 }
 
+function getFutureCards(){
+    //alphabetize
+    futureCardsArray = futurecards.replaceAll(" ", "").split(",");
+    futureCardsArray.sort()
+    
+    if (futureCardsArray.length == 1 && futureCardsArray[0] == ''){
+        return [];
+    }
+    
+    return futureCardsArray;
+}
+
 function getNeededCards(){
     // alphabetize
     var keepingArray = getKeepingCards();
@@ -662,8 +675,26 @@ function insertImages(type, cardsection){
             document.getElementById("fullcollectioncontainer").appendChild(cards)
         }
     }
-    else{ 
+    else if (type = "trading"){ 
         cardsArray = getTradingCards();
+        if (cardsArray.length != 0){
+            if (cardsection == "0M"){
+            cardsArray = cardsArray.filter(card => ZEROM.includes(card[0].toLowerCase()));
+            }
+            else if (cardsection =="NZ"){
+                cardsArray = cardsArray.filter(card => NZ.includes(card[0].toLowerCase()));
+            }  
+
+            cardsArray.sort()
+            tradingimgtagstext = makeImgTags(cardsArray, "trade");
+            // make elements
+            var cards = document.createElement('div');
+            cards.innerHTML = tradingimgtagstext;
+            document.getElementById("fullcollectioncontainer").appendChild(cards);
+        }
+    }
+    else{
+        cardsArray = getFutureCards();
         if (cardsArray.length != 0){
             if (cardsection == "0M"){
             cardsArray = cardsArray.filter(card => ZEROM.includes(card[0].toLowerCase()));
@@ -998,6 +1029,7 @@ function setWebsiteHeader(){
                 <a href="index.html" class="navbutton">home</a>
                 <a href="collecting.html" class="navbutton">collecting</a>
                 <a href="neededcards.html" class="navbutton">needed</a>
+                <a href="futurecards.html" class="navbutton">future</a>
                 <a href="keepingcards.html" class="navbutton">keeping</a>
                 <a href="tradingcards.html" class="navbutton">trading</a>
                 <a href="log.html" class="navbutton">logs</a>
