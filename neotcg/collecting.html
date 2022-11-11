@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>neotcg</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEcolorstcgdeckdata.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEtradingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEkeepingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                createPriorityDecks(); // fullsetisocontainer
+                sortNeededDecks();
+                sortSingleCards();
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            <p><b>collecting</b></p>
+            <div>
+                
+                <div style="margin-bottom: 30px; ">
+                    <p><b>high priority</b></p>
+
+                    <div id="fullsetisocontainer" style="display:flex; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+                    </div>
+
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <p><b>single cards</b></p>
+
+                    <div id="singlecardscontainer" style="display:flex; flex-direction: row; justify-content: center; flex-wrap: wrap; text-align: center">
+                    </div>
+
+                </div>
+
+
+                <div style="margin-bottom: 30px;">
+                    <p><b>all</b></p>
+
+                    <div id="neededdeckscontainer" style="display:flex; flex-direction: row; justify-content: center; flex-wrap: wrap; text-align: center">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="section"> <!-- DO NOT REMOVE -->
+            <p>powered by <a href="">neotcg</a></p>
+        </div>
+        </center>
+    </body>
+</html>

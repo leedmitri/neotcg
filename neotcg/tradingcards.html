@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>trading cards</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEtradingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEkeepingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATElogs.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                fillNewCardsContainer("keep"); //newcardscontainer
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            <p><b>trading cards<br></b></p>
+            <div>
+                <a href="tradingcardsall.html">all</a>
+                <a href="tradingcards0-M.html">0-M</a>
+                <a href="tradingcardsN-Z.html">N-Z</a>
+                <a href="tradingcardstext.html">as text</a>
+            </div>
+            
+           <p><b>new trading cards</b></p>
+           <div id="newcardscontainer"></div>
+        </div>
+        
+        <div class="section"> <!-- DO NOT REMOVE -->
+            <p>powered by <a href="">neotcg</a></p>
+        </div>
+        </center>
+    </body>
+</html>

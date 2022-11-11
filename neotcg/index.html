@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>home</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEkeepingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEtradingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATElogs.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                fillPlayerInfo(); // avatarcontainer, playernamecontainer, tradepostcontainer, tradetagcontainer
+                fillCoupons(); // couponcontainer
+                fillPortfolios(); // paletteportfoliocontainer, palettedeckscontainer, monochromeportfoliocontainer, monochromedeckscontainer
+                fillPendingTrades(); // pendingtradescontainer
+                fillSketchpads();  // currentsketchpadcontainer, completedsketchpadcontainer
+                fillCrayons(); // crayonscontainer
+                fillTotalCards(); // totalcardscontainer
+                fillSignatures(); // signaturescontainer
+                fillMasteries(); // masteriescontainer
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            
+            <div class="flex spaceevenly">
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/" target="_blank">colorstcg</a>
+                <a class="sectionlink" href="https://colors-trade.dreamwidth.org/" target="_blank">colorstrade</a>
+                <a class="sectionlink" href="http://colors-tcg.eu/recycledart.php" target="_blank">recycled art</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/2418272.html" target="_blank">art studio</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/2291592.html" target="_blank">art shop</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/2802693.html" target="_blank">activity rewards</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%2Aportfolios" target="_blank">portfolios</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%21masteries" target="_blank">masteries</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/2957585.html" target="_blank">levels</a>
+                <a class="sectionlink" href="http://colors-tcg.eu/cards.php?view=alpha" target="_blank">decks list</a>
+                <a class="sectionlink" href="http://colors-tcg.eu/members.php" target="_blank">member list</a>
+            </div>
+            
+            <hr style="border: 1px solid #658354; margin-top:10px;">
+            
+            <div class="flex spaceevenly">
+                <div class="flex center section">
+                    <div id="avatarcontainer"></div> <!-- DO NOT REMOVE -->
+                    <p class="tleft">
+                        <b>player:</b> <span id="playernamecontainer"></span><br> <!-- DO NOT REMOVE -->
+                        <b>level:</b> <span id="totalcardscontainer"></span><br> <!-- DO NOT REMOVE -->
+                        <b>dw trade post:</b> <span id="tradepostcontainer"></span><br> <!-- DO NOT REMOVE -->
+                        <b>dw trade tag:</b> <span id="tradetagcontainer"></span> <!-- DO NOT REMOVE -->
+                    </p>
+                </div>
+                <div class="flex">
+                    <div>
+                        <p><b>current</b></p>
+                        <div id="currentsketchpadcontainer">  <!-- DO NOT REMOVE -->
+                        </div>
+                    </div>
+                    <div>
+                        <p><b>completed</b></p>
+                        <div id="completedsketchpadscontainer">  <!-- DO NOT REMOVE -->
+                        </div>
+                    </div>
+                </div>
+                <div class="flex center section">
+                    <div class="flex fcol">
+                        <div id="paletteportfoliocontainer"></div>   <!-- DO NOT REMOVE -->
+                        <div>
+                            <button class="portfoliobutton" onclick="showPortfolio('palette')" type="button"><b>Palette ▾</b></button>
+                            <div id="palettehidden" class="portfoliohidden">
+                              <p id="palettedeckscontainer"></p> <!-- DO NOT REMOVE -->
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="flex fcol">
+                        <div id="monochromeportfoliocontainer"></div>  <!-- DO NOT REMOVE -->
+                        <div>
+                            <button class="portfoliobutton" onclick = "showPortfolio('monochrome')" type="button"><b>Monochrome ▾</b></button>
+                            <div id="monochromehidden" class="portfoliohidden">
+                              <p id="monochromedeckscontainer"></p> <!-- DO NOT REMOVE -->
+                            </div> 
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            
+            <div id="crayonscontainer">  <!-- DO NOT REMOVE -->
+            </div>
+            
+            <div class="section">
+                <div id="couponcontainer" class="flex">  <!-- DO NOT REMOVE -->
+                </div>
+            </div>
+            
+            <hr style="border: 1px solid #658354; margin-top:10px;">
+            
+            <div>
+                <p><b>pending trades</b></p>
+                <div id="pendingtradescontainer" class="flex"> <!-- DO NOT REMOVE -->
+                </div>
+            </div>
+            
+            <hr style="border: 1px solid #658354; margin-top:10px;">
+            
+            <div>
+                <p><b>signatures</b></p>
+                <div id="signaturescontainer" class="flex"> <!-- DO NOT REMOVE -->
+                    <p>none</p>
+                </div>
+            </div>
+            
+            <hr style="border: 1px solid #658354; margin-top:10px;">
+            
+            <div>
+                <p><b>masteries</b></p>
+                <div id="masteriescontainer" class="flex"> <!-- DO NOT REMOVE -->
+                    <p>none</p>
+                </div>
+            </div>
+            
+        </div>
+            
+        <div class="section"> <!-- DO NOT REMOVE -->
+            <p>powered by <a href="">neotcg</a></p>
+        </div>
+        </center>
+    </body>
+</html>

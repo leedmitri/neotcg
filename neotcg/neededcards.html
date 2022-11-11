@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>needed cards</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEcolorstcgdeckdata.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEkeepingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEtradingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                fillNeededCardsPage();
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            <p><b>needed cards</b></p>
+            <div style="display:flex; justify-content: center; text-align: center; flex-direction: column;">
+                <p>search for a specific card or multiple cards</p>
+                <input style="margin: auto;" id="searchbar" type="text"
+                name="search" placeholder="card01, card02, ...">  <!-- DO NOT REMOVE -->
+                <button onclick="cardTextSearch('neededcards')" style="padding: 5px; margin:auto;">search</button>
+            </div>
+
+            <p id="searchresultcontainer" style="overflow-x: wrap; margin-bottom:30px; text-align:center">
+            </p>
+            
+            <div>
+                <p>i take duplicates! dupe friendly list:</p>
+                <textarea id="dupecardstextareacontainer"></textarea>  <!-- DO NOT REMOVE -->
+            </div>
+            <div>
+                <p>or needs only:</p>
+                <textarea id="cardstextareacontainer"></textarea>  <!-- DO NOT REMOVE -->
+            </div>
+
+            <div id="cardstextcontainer" style="overflow-x: wrap;"></div>
+        </div>
+        
+        <div class="section"> <!-- DO NOT REMOVE -->
+            <p>powered by <a href="">neotcg</a></p>
+        </div>
+        </center>
+    </body>
+</html>

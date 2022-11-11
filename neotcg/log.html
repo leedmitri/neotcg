@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>logs</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="text/javascript" src="UPDATEkeepingcards.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATEplayerinfo.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="UPDATElogs.js"></script> <!-- DO NOT REMOVE -->
+        <script type="text/javascript" src="functions.js"></script> <!-- DO NOT REMOVE -->
+        <script>
+            window.onload = () => {
+                setWebsiteHeader();
+                document.getElementById("collectionlogcontainer").innerHTML = logs; // collectionlogcontainer
+            }
+        </script> <!-- DO NOT REMOVE -->
+    </head>
+    <body>
+        <!-- website header including navigation bar -->
+        <center>
+        <div id="websiteheadercontainer"></div>
+            
+        <!-- rest of the website -->
+        <div id="middle" class="">
+            <p><b>logs</b></p>
+           <div id="collectionlogcontainer" style="white-space: pre-line; text-align: left"> <!-- DO NOT REMOVE -->
+            </div>
+        </div>
+        
+        <div class="section"> <!-- DO NOT REMOVE -->
+            <p>powered by <a href="">neotcg</a></p>
+        </div>
+        </center>
+    </body>
+</html>
