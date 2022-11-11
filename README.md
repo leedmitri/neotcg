@@ -1,6 +1,27 @@
 # NeoTCG
 A Neocities friendly setup for Colors TCG. 
 
+# Automation Features
+- Crayon counting
+- Sketchpad marking
+- Portfolio completed decks marking
+- Sorting Cards by
+     - Color
+     - Search bar inputs
+     - Trading & keeping piles
+     - Newest traders and newest keeps
+     - Alphabetically
+     - Cards that start with 0-M, N-Z sections
+     - Text form
+- Levels
+- Masteries
+- Needed cards based on set decks
+- Priority decks displayed in grid format with cards you own and placeholders
+- All ISO decks colorcoded with links to their Colors TCG deck page.
+- Pending trades
+
+An example setup can be seen [here](https://gloomlee.neocities.org/colorstcg/neotcgexample/).
+
 # How to Use
 The js files beginning with "UPDATE" are the files that a user needs to update and change as they play Colors TCG. These files control all of the pages, and must stay in their given format.
 
