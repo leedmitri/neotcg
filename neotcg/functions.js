@@ -650,12 +650,11 @@ function insertImages(type, cardsection){
                 cardsArray = cardsArray.filter(card => NZ.includes(card[0].toLowerCase()));
             }
 
-            makeImgTags(cardsArray, "keep").then( keepingimgtagstext => {
-                // make elements
-                var cards = document.createElement('div');
-                cards.innerHTML = keepingimgtagstext;
-                document.getElementById("fullcollectioncontainer").appendChild(cards)
-            })
+            keepingimgtagstext = makeImgTags(cardsArray, "keep")
+            // make elements
+            var cards = document.createElement('div');
+            cards.innerHTML = keepingimgtagstext;
+            document.getElementById("fullcollectioncontainer").appendChild(cards)
         }
     }
     else{ 
@@ -669,12 +668,11 @@ function insertImages(type, cardsection){
             }  
 
             cardsArray.sort()
-            makeImgTags(cardsArray, "trade").then( tradingimgtagstext => {
-                // make elements
-                var cards = document.createElement('div');
-                cards.innerHTML = tradingimgtagstext;
-                document.getElementById("fullcollectioncontainer").appendChild(cards)
-            })   
+            tradingimgtagstext = makeImgTags(cardsArray, "trade");
+            // make elements
+            var cards = document.createElement('div');
+            cards.innerHTML = tradingimgtagstext;
+            document.getElementById("fullcollectioncontainer").appendChild(cards);
         }
     }
 
