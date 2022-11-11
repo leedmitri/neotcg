@@ -234,20 +234,25 @@ function fillSketchpads(){
 // INSERTS INTO crayonscontainer
 function fillCrayons(){
     logData = getLogs();
+    var addCrayons = additionalCrayons;
     var result = readLogs(logData);
     var crayons = result[2];
     var crayonsHolder = document.createElement("div")
     crayonsHolder.setAttribute("style", "display:flex; width: 200px; justify-content: space-evenly;")
     
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/redcrayon.gif'></div><p><b>" + crayons[0] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/orangecrayon.gif'></div><p><b>" + crayons[1] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/yellowcrayon.gif'></div><p><b>" + crayons[2] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/greencrayon.gif'></div><p><b>" + crayons[3] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/bluecrayon.gif'></div><p><b>" + crayons[4] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/purplecrayon.gif'></div><p><b>" + crayons[5] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/browncrayon.gif'></div><p><b>" + crayons[6] + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/graycrayon.gif'></div><p><b>" + crayons[7] + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/redcrayon.gif'></div><p><b>" + (crayons[0] + addCrayons["red"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/orangecrayon.gif'></div><p><b>" + (crayons[1] + addCrayons["orange"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/yellowcrayon.gif'></div><p><b>" + (crayons[2] + addCrayons["yellow"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/greencrayon.gif'></div><p><b>" + (crayons[3] + addCrayons["green"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/bluecrayon.gif'></div><p><b>" + (crayons[4] + addCrayons["blue"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/purplecrayon.gif'></div><p><b>" + (crayons[5] + addCrayons["purple"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/browncrayon.gif'></div><p><b>" + (crayons[6] + addCrayons["brown"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/graycrayon.gif'></div><p><b>" + (crayons[7] + addCrayons["gray"]) + '</b></p></div>';
     document.getElementById("crayonscontainer").appendChild(crayonsHolder);
+}
+
+function fillLogs(){
+    document.getElementById("collectionlogcontainer").innerHTML = logs + "\n" + unformattedlogs;
 }
 
 // INSERTS INTO totalcardscontainer
@@ -951,8 +956,8 @@ function readLogs(logData){
 
     })
 
-    var completedSketchpads = Math.floor(totalCardsTraded / 20) - spentSketchpads
-    var currentSketchpad = totalCardsTraded % 20
+    var completedSketchpads = Math.floor((totalCardsTraded + additionalCurrentSketchpadPoints) / 20) - spentSketchpads + additionalCompletedSketchpads;
+    var currentSketchpad = (totalCardsTraded + additionalCurrentSketchpadPoints) % 20
 
     return [completedSketchpads, currentSketchpad, crayons]
 }

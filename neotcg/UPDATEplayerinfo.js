@@ -66,6 +66,24 @@ var monochromeportfoliodecks = "deckone, decktwo, deckthree, deckfour, deckfive,
 */
 var sketchpadname = "sketchpad";
 
+/*
+   ADDING CRAYONS, CURRENT SKETCHPAD TRADES, COMPLETED SKETCHPADS:
+   if you ever want to archive/ delete part of your log, or are starting the log format while already having a different format log, set these variables.
+   the below variables will be ADDED to the num crayons/ sketchpad count/ completed sketchpads computed from log
+*/
+var additionalCrayons = {
+    "red": 0,
+    "orange": 0,
+    "yellow": 0,
+    "green": 0,
+    "blue": 0,
+    "purple": 0,
+    "brown": 0,
+    "gray": 0
+};
+var additionalCurrentSketchpadPoints = 0;
+var additionalCompletedSketchpads = 0;
+
 
 /*
     below should be one and done or infrequent changes

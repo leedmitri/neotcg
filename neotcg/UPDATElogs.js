@@ -30,7 +30,18 @@
             --started playing
         nov 1st, 2022
         `
+    
+*/
+/* 
+  if you already have logs when beginning to use this tool, insert your logs in unformattedlogs instead, and then set what your current number of crayons, current sketchpad, and completed number of sketchpads are in UPDATEplayerinfo at the ADDING CRAYONS, CURRENT SKETCHPAD TRADES, COMPLETED SKETCHPADS area.
+  
+  Once you've done that, begin putting your new correctly formatted logs in the logs variable
+  
 */
 var logs = 
+`
+`;
+
+var unformattedlogs =
 `
 `;
