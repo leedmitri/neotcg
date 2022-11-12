@@ -8,8 +8,8 @@ A Neocities friendly setup for Colors TCG.
 - Sorting Cards by
      - Color
      - Search bar inputs
-     - Trading & keeping piles
-     - Newest traders and newest keeps
+     - Trading, keeping, and future piles
+     - Newest traders, newest keeps, and newest future cards
      - Alphabetically
      - Cards that start with 0-M, N-Z sections
      - Text form
@@ -48,13 +48,22 @@ For example, if the player owned cards obnoxious02, help06, and sturdy09, the fo
 var tradingcards = "obnoxious02, help06, sturdy09";
 ```
 
-## UPDATEkeepingcards.js
+## UPDATEtradingcards.js
 Contains a single variable "tradingcards" that holds a string of comma seperated card names. The cards names should be of cards the player owns and wants to trade.
 
 The format for the variable is:
 ```
 var keepingcards = "card01, card02, card03";
 ```
+
+## UPDATEkeepingcards.js
+Contains a single variable "futurecards" that holds a string of comma seperated card names. The cards names should be cards of decks the player plans on collecting in the future.
+
+The format for the variable is:
+```
+var keepingcards = "card01, card02, card03";
+```
+
 
 ## UPDATElogs.js
 Contains a single variable "logs" that holds a multi-line string of the player's Colors TCG log. The player is required to use specific keywords in order to enable functionality for some of the setup's pages.
@@ -68,7 +77,24 @@ OPTIONALDATE
 `
 ```
 available commands and their formats are:
-TO DO
+**TRADING WITH A PLAYER**
+traded to PLAYERNAME: card01, card02, card03 for card04, card05, card06
+
+**GIFTING TO A PLAYER**
+gifted to PLAYERNAME: card01, card02
+
+**RECEIVING GIFTS FROM A PLAYER**
+gifted by PLAYERNAME: card01, card02
+
+**RECEIVING CARDS FROM GAMES/ SERVICES/ ETC.**
+received from GAMENAME/ SERVICENAME: card01, card02
+
+**USING CARDS/CRAYONS/SKETCHPADS AT GAMES/SERVICES**
+lost to GAMENAME/SERVICENAME: card02, 1 blue crayon, 1 sketchpad etc.
+   
+**CRAYONS MUST BE WRITTEN OUT WITH A NUMBERED AMOUNT!**
+    1 blue crayon or 2 blue crayons NOT blue crayon, 1 crayon rainbow, etc.
+
 
 ## UPDATEplayerinfo.js
 Contains a multiple variables that control everything else of the setup besides what is already covered above. Here the user has the below variables
