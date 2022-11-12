@@ -675,7 +675,7 @@ function insertImages(type, cardsection){
             document.getElementById("fullcollectioncontainer").appendChild(cards)
         }
     }
-    else if (type = "trading"){ 
+    else if (type == "trading"){ 
         cardsArray = getTradingCards();
         if (cardsArray.length != 0){
             if (cardsection == "0M"){
