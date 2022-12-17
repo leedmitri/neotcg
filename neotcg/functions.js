@@ -49,43 +49,15 @@ function createPriorityDecks(){
 
         //set bg colors
         // r #ffdbdb | o #ffeee2 | y #fcfade | g #e2fce6| b #dff2fd | p #e3e3ff| br #e9d4b7 | gr #d4d4d4
-        var headerColor;
-        switch(deckDictionary[deck][2]){
-            case "Red":
-                headerColor = "#ffdbdb"
-                break;
-            case "Orange":
-                headerColor = "#ffeee2"
-                break;
-            case "Yellow":
-                headerColor = "#fcfade"
-                break;
-            case "Green":
-                headerColor = "#e2fce6"
-                break;
-            case "Blue":
-                headerColor = "#dff2fd"
-                break;
-            case "Purple":
-                headerColor = "#e3e3ff"
-                break;
-            case "Brown":
-                headerColor = "#e9d4b7"
-                break;
-            case "Gray":
-                headerColor = "#d4d4d4"
-                break;
-            case "Special":
-                headerColor = "white"
-                break;
-        }
+        var headerColor = deckDictionary[deck][2].toLowerCase();
+        console.log(headerColor)
 
-        deckDiv.setAttribute("style", "display:inline-block; margin:5px;")
-        deckHeader.setAttribute("style", "background-color: " + headerColor + "; text-align: center; color:#1e4620; font-size: 15px; margin: 0px; padding: 5px;")
-        deckLink.setAttribute("style", "text-align: center;  font-size: 15px; margin: 0px;")
+        deckDiv.setAttribute("class", "deckdiv")
+        deckHeader.setAttribute("class", "deckheader deck" + headerColor)
+        deckLink.setAttribute("class", "decklink")
         deckLink.setAttribute("href", "https://colors-tcg.eu/viewcards.php?deck=" + deck)
         deckLink.innerHTML = deck
-        deckImgDiv.setAttribute("style", "display: flex; justify-content: center; flex-wrap: wrap; width: 275px")
+        deckImgDiv.setAttribute("class", "deckimgdiv")
 
         deckHeader.appendChild(deckLink)
         deckDiv.appendChild(deckHeader)
@@ -140,7 +112,7 @@ function fillCoupons(){
 
 // INSERTS INTO: avatarcontainer, playernamecontainer, tradepostcontainer, tradetagcontainer
 function fillPlayerInfo(){
-    document.getElementById("avatarcontainer").innerHTML = '<img id="avatar" src="' + avatar + '" style="width: 80px;">'
+    document.getElementById("avatarcontainer").innerHTML = '<img id="avatar" src="' + avatar + '">'
     document.getElementById("playernamecontainer").innerHTML = playername;
     document.getElementById("tradepostcontainer").innerHTML = "<a href='" + tradepost + "' target='_blank'>here</a>";
     document.getElementById("tradetagcontainer").innerHTML = "<a href='" + tradetag + "' target='_blank'>here</a>";
@@ -201,7 +173,7 @@ function fillPendingTrades(){
             var imgTags = document.createElement("div")
             var playerNamep = document.createElement("p")
 
-            pendingSection.setAttribute("style", "margin: 5px; margin-top: 0px;")
+            pendingSection.setAttribute("class", "pendingsection")
             playerNamep.innerHTML = playerName;
 
             cards.forEach( card => {
@@ -238,16 +210,16 @@ function fillCrayons(){
     var result = readLogs(logData);
     var crayons = result[2];
     var crayonsHolder = document.createElement("div")
-    crayonsHolder.setAttribute("style", "display:flex; width: 200px; justify-content: space-evenly;")
+    crayonsHolder.setAttribute("id", "crayonscontainer")
     
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/redcrayon.gif'></div><p><b>" + (crayons[0] + addCrayons["red"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/orangecrayon.gif'></div><p><b>" + (crayons[1] + addCrayons["orange"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/yellowcrayon.gif'></div><p><b>" + (crayons[2] + addCrayons["yellow"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/greencrayon.gif'></div><p><b>" + (crayons[3] + addCrayons["green"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/bluecrayon.gif'></div><p><b>" + (crayons[4] + addCrayons["blue"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/purplecrayon.gif'></div><p><b>" + (crayons[5] + addCrayons["purple"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/browncrayon.gif'></div><p><b>" + (crayons[6] + addCrayons["brown"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div style='display: flex; flex-direction: column; text-align: center; margin-right: 5px;'><div><img src='currency/graycrayon.gif'></div><p><b>" + (crayons[7] + addCrayons["gray"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/redcrayon.gif'></div><p><b>" + (crayons[0] + addCrayons["red"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/orangecrayon.gif'></div><p><b>" + (crayons[1] + addCrayons["orange"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/yellowcrayon.gif'></div><p><b>" + (crayons[2] + addCrayons["yellow"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/greencrayon.gif'></div><p><b>" + (crayons[3] + addCrayons["green"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/bluecrayon.gif'></div><p><b>" + (crayons[4] + addCrayons["blue"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/purplecrayon.gif'></div><p><b>" + (crayons[5] + addCrayons["purple"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/browncrayon.gif'></div><p><b>" + (crayons[6] + addCrayons["brown"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/graycrayon.gif'></div><p><b>" + (crayons[7] + addCrayons["gray"]) + '</b></p></div>';
     document.getElementById("crayonscontainer").appendChild(crayonsHolder);
 }
 
@@ -370,7 +342,7 @@ function fillNewCardsContainer(type){
         img.setAttribute("src", "cards/" + cardsFromType[index] + ".gif")
         img.setAttribute("title", cardsFromType[index])
         img.setAttribute("alt", cardsFromType[index])
-        img.setAttribute("style", "margin: 0px;")
+        img.setAttribute("class", "cardimage")
         newcardscontainer.appendChild(img)
     }
 }
@@ -1023,7 +995,7 @@ function setCredits(){
 function setWebsiteHeader(){
     document.getElementById("websiteheadercontainer").innerHTML = 
         `
-        <div style="margin-bottom: 20px;">
+        <div id="websiteheader">
             <h1><span id="headername"></span>'s colortcg</h1>
             <div id="navbar">
                 <a href="index.html" class="navbutton">home</a>
@@ -1086,15 +1058,15 @@ function sortNeededDecks(){
 
     //set bg colors
     // r #ffdbdb | o #ffeee2 | y #fcfade | g #e2fce6| b #dff2fd | p #e3e3ff| br #e9d4b7 | gr #d4d4d4
-    redDiv.setAttribute("style", "background-color: #ffdbdb; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    orangeDiv.setAttribute("style", "background-color: #ffeee2; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    yellowDiv.setAttribute("style", "background-color: #fcfade; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    greenDiv.setAttribute("style", "background-color: #e2fce6; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    blueDiv.setAttribute("style", "background-color: #dff2fd; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    purpleDiv.setAttribute("style", "background-color: #e3e3ff; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    brownDiv.setAttribute("style", "background-color: #e9d4b7; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    grayDiv.setAttribute("style", "background-color: #d4d4d4; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
-    specialDiv.setAttribute("style", "background-color: white; display:flex; flex-direction: column; padding:10px;  margin: 10px; min-width: 90px;")
+    redDiv.setAttribute("class", "neededdeckcolumn deckred")
+    orangeDiv.setAttribute("class", "neededdeckcolumn deckorange")
+    yellowDiv.setAttribute("class", "neededdeckcolumn deckyellow")
+    greenDiv.setAttribute("class", "neededdeckcolumn deckgreen")
+    blueDiv.setAttribute("class", "neededdeckcolumn deckblue")
+    purpleDiv.setAttribute("class", "neededdeckcolumn deckpurple")
+    brownDiv.setAttribute("class", "neededdeckcolumn deckbrown")
+    grayDiv.setAttribute("class", "neededdeckcolumn deckgray")
+    specialDiv.setAttribute("class", "neededdeckcolumn deckspecial")
 
 
     neededDecks.forEach( deck => {

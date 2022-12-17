@@ -1,18 +1,48 @@
+:root{
+    
+    /* general colors */
+    --websitebackgroundcolor: darkseagreen;
+    --pagecontentmaincolor: beige;
+    --pagecontentaccentcolor: darkseagreen;
+    
+    --navbuttoncolor: beige;
+    
+    --textcolor: black;
+    --linkcolor: black;
+    
+    /* collecting page header/deck colors */
+    --collectingcolor-red: #ffdbdb;
+    --collectingcolor-orange: #ffeee2;
+    --collectingcolor-yellow: #fcfade;
+    --collectingcolor-green: #e2fce6;
+    --collectingcolor-blue: #dff2fd;
+    --collectingcolor-purple: #e3e3ff;
+    --collectingcolor-brown: #e9d4b7;
+    --collectingcolor-gray: #d4d4d4;
+    --collectingcolor-special: white;
+}
+
+
+/* DO NOT CHANGE BELOW UNLESS YOU KNOW WHAT YOU'RE DOING */
+
 /* GENERAL */
 body{
-    background-color: darkseagreen;
+    background-color: var(--websitebackgroundcolor);
+    /* background image instead of color */
+    /* background-image: ? */
 }
 p{
+    color: var(--textcolor);
     margin: 0px;
     margin-left: 5px;
     margin-right: 5px;
     padding: 0px;
 }
 a{
-    color: black;
+    color: var(--linkcolor);
 }
 hr{
-    border: 1px solid beige;
+    border: 1px solid var(--pagecontentaccentcolor);
     margin-top: 10px;
     margin-left: 30px;
     margin-right: 30px;
@@ -39,38 +69,131 @@ hr{
 .section{
     margin: 5px;
 }
+.marginimage{
+    margin: 5px;
+}
+.cardimage{
+    margin: 0px;
+}
+
 #middle{
     min-height: 500px;
     width: 900px;
     padding: 10px;
-    background-color: beige;
+    background-color: var(--pagecontentmaincolor);
     margin-left: 10px;
     margin-right: 10px;
-}
-.marginimage{
-    margin: 5px;
 }
 
 
 /* HEADER */
+#websiteheader{
+    margin-bottom: 20px;
+}
 .navbutton{
     color: black;
-    background-color: beige;
+    background-color: var(--navbuttoncolor);
     text-decoration: none;
     padding: 7px;
 }
 
 
 /* HOME PAGE */
+#avatar{
+    width: 80px;
+}
 .portfoliobutton{
     border: none; 
     background-color: transparent;
 }
 .portfoliohidden{
-    background-color: beige;
+    background-color: var(--pagecontentmaincolor);
     width: 110px;
-    border: 1px solid darkseagreen;
+    border: 1px solid var(--pagecontentaccentcolor);
     position: absolute; 
     display: none; 
     text-align:left
 }
+#pendingsection{
+    margin: 5px; 
+    margin-top: 0px;
+}
+#crayonscontainer{
+    display:flex; 
+    width: 200px; 
+    justify-content: space-evenly;
+}
+.crayoncount{
+    display: flex; 
+    flex-direction: column; 
+    text-align: center; 
+    margin-right: 5px;
+}
+
+/* COLLECTING PAGE */
+.deckred{
+    background-color: var(--collectingcolor-red);
+}
+.deckorange{
+    background-color: var(--collectingcolor-orange);
+}
+.deckyellow{
+    background-color: var(--collectingcolor-yellow);
+}
+.deckgreen{
+    background-color: var(--collectingcolor-green);
+}
+.deckblue{
+    background-color: var(--collectingcolor-blue);
+}
+.deckpurple{
+    background-color: var(--collectingcolor-purple);
+}
+.deckbrown{
+    background-color: var(--collectingcolor-brown);
+}
+.deckgray{
+    background-color: var(--collectingcolor-gray);
+}
+.deckspecial{
+    background-color: var(--collectingcolor-special);
+}
+.deckdiv{
+    display:inline-block;
+    margin:5px;
+}
+.deckimgdiv{
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    width: 275px;
+}
+.deckheader{
+    text-align: center;
+    font-size: 15px; 
+    margin: 0px; 
+    padding: 5px;
+}
+.decklink{
+    text-align: center;
+    font-size: 15px; 
+    margin: 0px;
+}
+.neededdeckcolumn{
+    display:flex; 
+    flex-direction: column; 
+    padding:10px;  
+    margin: 10px; 
+    min-width: 90px;
+}
+
+
+
+
+
+
+
+
+
+
+
