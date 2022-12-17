@@ -49,8 +49,8 @@ function createPriorityDecks(){
 
         //set bg colors
         // r #ffdbdb | o #ffeee2 | y #fcfade | g #e2fce6| b #dff2fd | p #e3e3ff| br #e9d4b7 | gr #d4d4d4
-        var headerColor = deckDictionary[deck][2].toLowerCase();
-        console.log(headerColor)
+        // check if deckdictionary had deck 
+        var headerColor = getColorSeries(deck)[2].toLowerCase();
 
         deckDiv.setAttribute("class", "deckdiv")
         deckHeader.setAttribute("class", "deckheader deck" + headerColor)
@@ -1055,6 +1055,7 @@ function sortNeededDecks(){
     var brownDiv = document.createElement("div");
     var grayDiv = document.createElement("div");
     var specialDiv = document.createElement("div");
+    var notfoundDiv = document.createElement("div");
 
     //set bg colors
     // r #ffdbdb | o #ffeee2 | y #fcfade | g #e2fce6| b #dff2fd | p #e3e3ff| br #e9d4b7 | gr #d4d4d4
@@ -1067,14 +1068,18 @@ function sortNeededDecks(){
     brownDiv.setAttribute("class", "neededdeckcolumn deckbrown")
     grayDiv.setAttribute("class", "neededdeckcolumn deckgray")
     specialDiv.setAttribute("class", "neededdeckcolumn deckspecial")
+    notfoundDiv.setAttribute("class", "neededdeckcolumn decknone")
 
+    // if deck is not found in deck dictionary:
+    var notfound = false;
 
     neededDecks.forEach( deck => {
         var deckLink = document.createElement("a");
         deckLink.setAttribute("href", "https://colors-tcg.eu/viewcards.php?deck=" + deck)
         deckLink.innerHTML = deck;
 
-        switch(deckDictionary[deck][2]){
+        var deckColor = getColorSeries(deck)[2]
+        switch(deckColor){
             case "Red":
                 redDiv.appendChild(deckLink)
                 break;
@@ -1102,7 +1107,10 @@ function sortNeededDecks(){
             case "Special":
                 specialDiv.appendChild(deckLink)
                 break;
-
+            case "COLORNOTFOUND":
+                notfound = true;
+                notfoundDiv.appendChild(deckLink)
+                break;
         }
     })
 
@@ -1115,6 +1123,9 @@ function sortNeededDecks(){
     document.getElementById("neededdeckscontainer").appendChild(brownDiv)
     document.getElementById("neededdeckscontainer").appendChild(grayDiv)
     document.getElementById("neededdeckscontainer").appendChild(specialDiv)
+    if (notfound == true){
+        document.getElementById("neededdeckscontainer").appendChild(notfoundDiv)
+    }
 }
 
 function sortSingleCards(){

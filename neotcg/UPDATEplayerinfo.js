@@ -27,8 +27,8 @@ var pendingtrades = [];
    
    ex: "deckone, decktwo, deckthree" or "card01, card02, card03"
 */
-var highprioritydecks = "clamp, earring, elegance, honorific, jingling, labcoat, oranges, tune, vest"; // "deckone, decktwo, deckthree..."
-var allisodecks = "clamp, earring, elegance, honorific, jingling, labcoat, oranges, tune, vest"; // "deckone, decktwo, deckthree..."
+var highprioritydecks = "clamp, earring, elegance, honorific, jingling, labcoat, oranges, tune, vest, deckdoesntexist"; // "deckone, decktwo, deckthree..."
+var allisodecks = "clamp, earring, elegance, honorific, jingling, labcoat, oranges, tune, vest, deckdoesntexist"; // "deckone, decktwo, deckthree..."
 var singlecards = "clamp02"; // "card01, card02, card03..."
 
 

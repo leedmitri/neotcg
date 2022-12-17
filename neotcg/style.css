@@ -158,6 +158,9 @@ hr{
 .deckspecial{
     background-color: var(--collectingcolor-special);
 }
+.deckCOLORNOTFOUND{
+    background-color: none;
+}
 .deckdiv{
     display:inline-block;
     margin:5px;
