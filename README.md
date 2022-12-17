@@ -30,7 +30,7 @@ The js files beginning with "UPDATE" are the files that a user needs to update a
 ## UPDATEcolorstcgdeckdata.js
 Contains a single variable "deckDictionary" that holds a dictionary of data scrapped from Colors TCG's [deck page](https://colors-tcg.eu/cards.php?view=alpha). This dictionary needs to be updated for new deck releases. A tool for getting an updated dictionary can be found at [Gloomlee's website](https://gloomlee.neocities.org/colorstcg/colorstcgscrapper.html), which will output the deckDictionary variable for you to copy and paste into the UPDATEcolorstcgdeckdata.js file.
 
-**This will need to be updated every month and/or for every new Colors TCG deck release, in order to get the series, character name, and color data for the new decks.**
+**This will need to be updated every month and/or for every new Colors TCG deck release, in order to get the series, character name, and color data for the new decks. This data is used for displaying the deck colors on the collecting page, sorting by color on your collection pages, and searching by series name/ character name on your collection pages.**
 
 The format for the dictionary is:
 ```
@@ -202,5 +202,6 @@ Signatures can be listed in UPDATEkeepingcards.js, and their image placed in you
 Mastery images go in your cards folder as if a normal card. When you master a deck, it will automatically put the mastery image on your home page.
 
 **My collecting page is not showing all of the decks I entered as high priority, what should I do?**  
-If the collecting page breaks, its likely due to not having your UPDATEcolorstcgdeckdata.js file updated. If you have a recently released deck entered as high priority, but do not have an updated UPDATEcolorstcgdeckdata.js file, it will not be able to find its color data, and will break. Try updating the file by downloading Color TCG's [deck html page](https://colors-tcg.eu/cards.php?view=alpha) by right clicking and saving, then upload the .htm file at [Gloomlee's website](https://gloomlee.neocities.org/colorstcg/colorstcgscrapper.html). Copy and paste the resulting deck dictionary variable in your UPDATEcolorstcgdeckdata.js, overwriting what is already there. If you still have issues, make sure the deck names do not have spelling errors.
+If the collecting page breaks, its likely due to not having your UPDATEcolorstcgdeckdata.js file updated. If you have a recently released deck entered as high priority, but do not have an updated UPDATEcolorstcgdeckdata.js file, it will not be able to find its color data, and will break. Try updating the file by downloading Color TCG's [deck html page](https://colors-tcg.eu/cards.php?view=alpha) by right clicking and saving, then upload the .htm file at [Gloomlee's website](https://gloomlee.neocities.org/colorstcg/colorstcgscrapper.html). Copy and paste the resulting deck dictionary variable in your UPDATEcolorstcgdeckdata.js, overwriting what is already there. If you still have issues, make sure the deck names do not have spelling errors.  
+**UPDATE 12/16/2022**: This has been fixed. make sure you have an updated functions.js file from the github, and check out the [neoTCG update page](https://gloomlee.neocities.org/neotcg/updates.html) to see the changes.
 
