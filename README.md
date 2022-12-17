@@ -1,5 +1,7 @@
 # NeoTCG
-A Neocities friendly setup for Colors TCG. 
+A Neocities friendly setup for Colors TCG.  
+See more about Colors TCG and NeoTCG updates [here](https://gloomlee.neocities.org/neotcg/neotcg.html).  
+Please make sure to not overwrite your files by pulling from the github, especially your UPDATE files.
 
 # Automation Features
 - Crayon counting
