@@ -374,7 +374,10 @@ function fillMasteries(){
     if (Object.keys(keepingDeckDictionary).length != 0){
         document.getElementById("masteriescontainer").innerHTML = "";
         Object.keys(keepingDeckDictionary).forEach( keepingDeck => {
-            if (keepingDeckDictionary[keepingDeck].length == 20){
+            // remove duplicates 
+            var cardsOwnedFromDeck = keepingDeckDictionary[keepingDeck];
+            cardsOwnedFromDeck = cardsOwnedFromDeck.filter( (card, index) => cardsOwnedFromDeck.indexOf(card) == index )
+            if (cardsOwnedFromDeck.length >= 20){
                 var img = document.createElement("img");
                 img.src = "cards/" + keepingDeck + "master.gif";
                 img.alt = keepingDeck + "master";
