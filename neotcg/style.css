@@ -114,7 +114,7 @@ hr{
     display: none; 
     text-align:left
 }
-#pendingsection{
+.pendingsection{
     margin: 5px; 
     margin-top: 0px;
 }
