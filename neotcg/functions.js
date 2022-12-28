@@ -78,7 +78,8 @@ function createPriorityDecks(){
             }
             else{
                 var imgTag = document.createElement("img");
-                imgTag.setAttribute("src", "cards/placeholdercard.gif")
+                imgTag.setAttribute("src", "cards/" + deck + "00.gif")
+                imgTag.setAttribute("onerror", "this.src='cards/placeholdercard.gif'")
                 imgTag.setAttribute("title", deck + "placeholdercard")
                 imgTag.setAttribute("alt", deck + "placeholdercard")
 
