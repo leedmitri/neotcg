@@ -335,7 +335,7 @@ function fillNeededCardsPage(){
     cardsp.innerHTML = neededCards.join(", ")
     cards.appendChild(cardsp)
 
-    cardsString = neededCards.join(", ") + ", " + singleCards.join(", ")
+    cardsString = neededCards.join(", ")
 
 
     document.getElementById("cardstextcontainer").appendChild(cardsp);
@@ -607,9 +607,23 @@ function getNeededCards(){
     var keepingArray = getKeepingCards();
     keepingArray.sort()
 
-    collectDecks = highprioritydecks.replaceAll(" ", "").split(",");
-    deckNames = allisodecks.replaceAll(" ", "").split(",");
-    singleCards = singlecards.replaceAll(" ", "").split(",");
+    if (highprioritydecks != '')
+    {
+        collectDecks = highprioritydecks.replaceAll(" ", "").split(",");
+    }
+    else{ collectDecks = []; }
+
+    if (allisodecks != '')
+    {
+        deckNames = allisodecks.replaceAll(" ", "").split(",");
+    }
+    else{deckNames = [];}
+
+    if (singlecards != '')
+    {
+        singleCards = singlecards.replaceAll(" ", "").split(",");
+    }
+    else{singleCards = [];}
     singleCards.sort()
     deckNames.sort()
 
@@ -650,6 +664,9 @@ function getNeededCards(){
     futures = neededCards;
 
     var allneeds = collects.concat(singles).concat(futures);
+    console.log(collects)
+    console.log(singles)
+    console.log(futures)
     allneeds.sort();
 
     return [allneeds, collects, singles, futures];

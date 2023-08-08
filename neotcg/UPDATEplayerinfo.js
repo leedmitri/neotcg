@@ -28,8 +28,8 @@ var pendingtrades = [];
    ex: "deckone, decktwo, deckthree" or "card01, card02, card03"
 */
 var highprioritydecks = "clamp, earring, elegance, honorific, jingling, labcoat, oranges, tune, vest"; // "deckone, decktwo, deckthree..."
-var allisodecks = "clamp, close"; // "deckone, decktwo, deckthree..."
-var singlecards = "apple01"; // "card01, card02, card03..."
+var allisodecks = ""; // "deckone, decktwo, deckthree..."
+var singlecards = ""; // "card01, card02, card03..."
 
 
 /* 
