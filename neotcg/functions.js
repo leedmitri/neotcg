@@ -592,9 +592,6 @@ function getNeededCards(){
     singleCards.sort()
     deckNames.sort()
 
-    // check if single cards obtained
-    singleCards = singleCards.filter(card => !keepingArray.includes(card))
-
     // find needed cards from deck names
     var neededCards = [];
     var dupeNeededCards = [];
@@ -611,6 +608,11 @@ function getNeededCards(){
         }
 
     })
+
+    // find needed single cards
+    singleCards = singleCards.filter(card => !keepingArray.includes(card))
+    neededCards = neededCards.concat(singleCards);
+    neededCards.sort();
 
     return [neededCards, dupeNeededCards];
 }
