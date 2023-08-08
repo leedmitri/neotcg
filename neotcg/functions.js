@@ -24,16 +24,37 @@ function cardTextSearch(type){
     if (type == "tradingcards") { searchingCards = getNeededCards()[0] }
     else { searchingCards = getTradingCards() }
 
-    var neededCards = getNeededCards()[0];
+    var result = getNeededCards();
+    var collecting = result[1];
+    var singles = result[2];
+    var future = result[3];
 
-    var cardsFound = neededCards.filter(card => {
+    var collectFound = collecting.filter(card => {
         return searchArray.some( input => {
             if (card.startsWith(input) && input != ''){
                 return true;
             }
         })
     })
-    document.getElementById("searchresultcontainer").innerHTML = "cards found: " + cardsFound.length + "<br>" + cardsFound.join(", ")
+    var singlesFound = singles.filter(card => {
+        return searchArray.some( input => {
+            if (card.startsWith(input) && input != ''){
+                return true;
+            }
+        })
+    })
+    var futureFound = future.filter(card => {
+        return searchArray.some( input => {
+            if (card.startsWith(input) && input != ''){
+                return true;
+            }
+        })
+    })
+
+    document.getElementById("searchresultcontainer").innerHTML = '';
+    document.getElementById("searchresultcontainer").innerHTML += "high priority: " + collectFound.length + "<br>" + collectFound.join(", ") + "<br><br>";
+    document.getElementById("searchresultcontainer").innerHTML += "single cards: " + singlesFound.length + "<br>" + singlesFound.join(", ") + "<br><br>";
+    document.getElementById("searchresultcontainer").innerHTML += "future: " + futureFound.length + "<br>" + futureFound.join(", ") + "<br>";
 }
 
 // INSERTS INTO: fullsetisocontainer
@@ -307,19 +328,18 @@ function fillTotalCards(){
 function fillNeededCardsPage(){
     var neededData = getNeededCards();
     var neededCards = neededData[0];
-    var dupeNeededCards = neededData[1];
 
     // make elements
     var cards = document.createElement('div');
     var cardsp = document.createElement('p');
-    cardsp.innerHTML = neededCards.join(", ")  + ", " + singleCards.join(", ")
+    cardsp.innerHTML = neededCards.join(", ")
     cards.appendChild(cardsp)
 
     cardsString = neededCards.join(", ") + ", " + singleCards.join(", ")
 
+
     document.getElementById("cardstextcontainer").appendChild(cardsp);
-    document.getElementById("cardstextareacontainer").value = cardsString
-    document.getElementById("dupecardstextareacontainer").value = dupeNeededCards.join(", ") + ", " + singleCards.join(", ")
+    document.getElementById("cardstextareacontainer").value = cardsString;
 }
 
 function fillNewCardsContainer(type){
@@ -587,14 +607,31 @@ function getNeededCards(){
     var keepingArray = getKeepingCards();
     keepingArray.sort()
 
+    collectDecks = highprioritydecks.replaceAll(" ", "").split(",");
     deckNames = allisodecks.replaceAll(" ", "").split(",");
     singleCards = singlecards.replaceAll(" ", "").split(",");
     singleCards.sort()
     deckNames.sort()
 
-    // find needed cards from deck names
+    //find collect needed cards
+    var collects = [];
+    collectDecks.forEach( deckName => {
+        for (var index = 1; index < 21; index++){
+            var cardNumber = ''
+            if (index < 10){ cardNumber = "0"+index}
+            else {cardNumber += index;}
+
+            if (!keepingArray.includes(deckName + cardNumber)){
+                collects.push(deckName + cardNumber);
+            }
+        }
+
+    })
+
+    //remove collect decks from all decks
+    deckNames = deckNames.filter(deck => !collectDecks.includes(deck));
+    // find needed cards from future
     var neededCards = [];
-    var dupeNeededCards = [];
     deckNames.forEach( deckName => {
         for (var index = 1; index < 21; index++){
             var cardNumber = ''
@@ -604,17 +641,18 @@ function getNeededCards(){
             if (!keepingArray.includes(deckName + cardNumber)){
                 neededCards.push(deckName + cardNumber);
             }
-            dupeNeededCards.push(deckName + cardNumber);
         }
 
     })
 
     // find needed single cards
-    singleCards = singleCards.filter(card => !keepingArray.includes(card))
-    neededCards = neededCards.concat(singleCards);
-    neededCards.sort();
+    singles = singleCards.filter(card => !keepingArray.includes(card))
+    futures = neededCards;
 
-    return [neededCards, dupeNeededCards];
+    var allneeds = collects.concat(singles).concat(futures);
+    allneeds.sort();
+
+    return [allneeds, collects, singles, futures];
 }
 
 function getTradingCards(){
