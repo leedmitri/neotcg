@@ -4,4 +4,4 @@
     
     ex: "card01, card02...."
 */
-var keepingcards = "clamp01";
+var keepingcards = "";

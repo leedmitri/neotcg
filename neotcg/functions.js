@@ -347,9 +347,9 @@ function fillNewCardsContainer(type){
     var cardsFromType;
     var numCardsShown;
     
-    if (type == "keep"){ cardsFromType = getKeepingCards(); }
-    else if ( type == "trading") { cardsFromType = getTradingCards(); }
-    else { cardsFromType = getFutureCards(); }
+    if (type == "keep"){ cardsFromType = getKeepingCards(false); }
+    else if ( type == "trading") { cardsFromType = getTradingCards(false); }
+    else { cardsFromType = getFutureCards(false); }
 
     if (cardsFromType.length < 100){
         numCardsShown = cardsFromType.length;
@@ -574,10 +574,12 @@ function getDeckNames(keepingArray){
     return decks;
 }
 
-function getKeepingCards(){
+function getKeepingCards(sort = true){
     //alphabetize
     keepingArray = keepingcards.replaceAll(" ", "").split(",");
-    keepingArray.sort();
+    if (sort){
+        keepingArray.sort();
+    }
     
     if (keepingArray.length == 1 && keepingArray[0] == ''){
         return [];
@@ -590,10 +592,12 @@ function getLogs(){
     return logs.split("\n");
 }
 
-function getFutureCards(){
+function getFutureCards(sort = true){
     //alphabetize
     futureCardsArray = futurecards.replaceAll(" ", "").split(",");
-    futureCardsArray.sort()
+    if (sort){
+        futureCardsArray.sort();
+    }
     
     if (futureCardsArray.length == 1 && futureCardsArray[0] == ''){
         return [];
@@ -672,10 +676,12 @@ function getNeededCards(){
     return [allneeds, collects, singles, futures];
 }
 
-function getTradingCards(){
+function getTradingCards(sort = true){
     //alphabetize
     fortradeArray = tradingcards.replaceAll(" ", "").split(",");
-    fortradeArray.sort()
+    if (sort){
+        fortradeArray.sort();
+    }
     
     if (fortradeArray.length == 1 && fortradeArray[0] == ''){
         return [];
