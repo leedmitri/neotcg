@@ -22,14 +22,20 @@ var pendingtrades = [];
    SPECIFIC CARDS:
    if you want specific cards and not the entire deck
    put the card name, not the deck name (ie sakura01, not sakura)
+
+   FUTURE DECKS:
+   cards that will not pop up under needed, but you'd like to save for
+   collecting in the future
+   put the deck name, not card numbers (ie sakura, not sakura01)
    
    there is no limit to how many decks or cards you would like to put in each
    
    ex: "deckone, decktwo, deckthree" or "card01, card02, card03"
 */
-var highprioritydecks = "clamp, earring, elegance, honorific, jingling, labcoat, oranges, tune, vest"; // "deckone, decktwo, deckthree..."
-var allisodecks = ""; // "deckone, decktwo, deckthree..."
-var singlecards = ""; // "card01, card02, card03..."
+var highprioritydecks = "clamp, earring, elegance, honorific, jingling, labcoat"; // "deckone, decktwo, deckthree..."
+var allisodecks = "clamp, earring, elegance, honorific, jingling, labcoat"; // "deckone, decktwo, deckthree..."
+var singlecards = "orange01, tune01"; // "card01, card02, card03..."
+var allfuturedecks = "vest"; // "deckone, decktwo, deckthree..."
 
 
 /* 
@@ -67,9 +73,10 @@ var monochromeportfoliodecks = "deckone, decktwo, deckthree, deckfour, deckfive,
 var sketchpadname = "sketchpad";
 
 /*
-   ADDING CRAYONS, CURRENT SKETCHPAD TRADES, COMPLETED SKETCHPADS:
+   SET STARTING COLLECTION
    if you ever want to archive/ delete part of your log, or are starting the log format while already having a different format log, set these variables.
-   the below variables will be ADDED to the num crayons/ sketchpad count/ completed sketchpads computed from log
+   This will represent your starting point that the log works off of.
+   ALSO SET starting keeping, trading, and future cards in the UPDATEkeeping.js, UPDATEtrading.js, and UPDATEfuture.js files
 */
 var additionalCrayons = {
     "red": 0,
@@ -83,7 +90,6 @@ var additionalCrayons = {
 };
 var additionalCurrentSketchpadPoints = 0;
 var additionalCompletedSketchpads = 0;
-
 
 /*
     below should be one and done or infrequent changes

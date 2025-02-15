@@ -1,3 +1,55 @@
+//INITIAL SETUP
+
+//previous collection
+if (tradingcards != ''){
+    tradingcards = tradingcards.replaceAll(" ", "").split(",");
+}
+else{ tradingcards = []; }
+if (keepingcards != ''){
+    keepingcards = keepingcards.replaceAll(" ", "").split(",");
+}
+else{ keepingcards = []; }
+if (futurecards != ''){
+    futurecards = futurecards.replaceAll(" ", "").split(",");
+}
+else{ futurecards = []; }
+
+//collecting
+if (highprioritydecks != ''){
+    highprioritydecks = highprioritydecks.replaceAll(" ", "").split(",");
+}
+else{ highprioritydecks = []; }
+if (allisodecks != ''){
+    allisodecks = allisodecks.replaceAll(" ", "").split(",");
+}
+else{ allisodecks = []; }
+if (singlecards != ''){
+    singlecards = singlecards.replaceAll(" ", "").split(",");
+}
+else{ singlecards = []; }
+if (allfuturedecks != ''){
+    allfuturedecks = allfuturedecks.replaceAll(" ", "").split(",");
+}
+else{ allfuturedecks = []; }
+
+singlecards.sort();
+allfuturedecks.sort();
+
+var crayons = additionalCrayons;
+var currentsketchpad = additionalCurrentSketchpadPoints;
+var completedsketchpads = additionalCompletedSketchpads;
+var allneeds = [];
+var collects = [];
+var singles = [];
+var futures = [];
+
+readLogs();
+generateNeededCards();
+
+//END INITIAL SETUP
+
+
+
 function cardNamesFromImgTags(imgTags){
     var imageTagsArray = imgTags.split('.gif');
     imageTagsArray.pop();
@@ -25,11 +77,11 @@ function cardTextSearch(type){
     else { searchingCards = getTradingCards() }
 
     var result = getNeededCards();
-    var collecting = result[1];
-    var singles = result[2];
-    var future = result[3];
+    collects = result[1];
+    singles = result[2];
+    future = result[3];
 
-    var collectFound = collecting.filter(card => {
+    var collectFound = collects.filter(card => {
         return searchArray.some( input => {
             if (card.startsWith(input) && input != ''){
                 return true;
@@ -60,7 +112,7 @@ function cardTextSearch(type){
 // INSERTS INTO: fullsetisocontainer
 function createPriorityDecks(){
     var cardsOwned = getKeepingCards();
-    var priorityNeeds = highprioritydecks.replaceAll(" ","").split(",");
+    var priorityNeeds = highprioritydecks;
     priorityNeeds.forEach( deck => {
         // create elements
         var deckDiv = document.createElement("div");
@@ -216,32 +268,23 @@ function fillPendingTrades(){
 
 // INSERTS INTO currentsketchpadcontainer, completedsketchpadcontainer
 function fillSketchpads(){
-    logData = getLogs();
-    var result = readLogs(logData);
-    var completedSketchpads = result[0];
-    var currentSketchpad = result[1];
-    
-    document.getElementById("completedsketchpadscontainer").innerHTML = "<img class='marginimage' src='sketchpads/" + sketchpadname + "20.gif'>x" + completedSketchpads;
-    document.getElementById("currentsketchpadcontainer").innerHTML = "<img class='marginimage' src='sketchpads/" + sketchpadname + currentSketchpad + ".gif'>";
+    document.getElementById("completedsketchpadscontainer").innerHTML = "<img class='marginimage' src='sketchpads/" + sketchpadname + "20.gif'>x" + completedsketchpads;
+    document.getElementById("currentsketchpadcontainer").innerHTML = "<img class='marginimage' src='sketchpads/" + sketchpadname + currentsketchpad + ".gif'>";
 }
 
 // INSERTS INTO crayonscontainer
 function fillCrayons(){
-    logData = getLogs();
-    var addCrayons = additionalCrayons;
-    var result = readLogs(logData);
-    var crayons = result[2];
     var crayonsHolder = document.createElement("div")
     crayonsHolder.setAttribute("id", "crayonscontainer")
     
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/redcrayon.gif'></div><p><b>" + (crayons[0] + addCrayons["red"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/orangecrayon.gif'></div><p><b>" + (crayons[1] + addCrayons["orange"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/yellowcrayon.gif'></div><p><b>" + (crayons[2] + addCrayons["yellow"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/greencrayon.gif'></div><p><b>" + (crayons[3] + addCrayons["green"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/bluecrayon.gif'></div><p><b>" + (crayons[4] + addCrayons["blue"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/purplecrayon.gif'></div><p><b>" + (crayons[5] + addCrayons["purple"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/browncrayon.gif'></div><p><b>" + (crayons[6] + addCrayons["brown"]) + '</b></p></div>';
-    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/graycrayon.gif'></div><p><b>" + (crayons[7] + addCrayons["gray"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/redcrayon.gif'></div><p><b>" + (crayons["red"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/orangecrayon.gif'></div><p><b>" + (crayons["orange"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/yellowcrayon.gif'></div><p><b>" + (crayons["yellow"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/greencrayon.gif'></div><p><b>" + (crayons["green"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/bluecrayon.gif'></div><p><b>" + (crayons["blue"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/purplecrayon.gif'></div><p><b>" + (crayons["purple"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/browncrayon.gif'></div><p><b>" + (crayons["brown"]) + '</b></p></div>';
+    crayonsHolder.innerHTML += "<div class='crayoncount'><div><img src='currency/graycrayon.gif'></div><p><b>" + (crayons["gray"]) + '</b></p></div>';
     document.getElementById("crayonscontainer").appendChild(crayonsHolder);
 }
 
@@ -575,119 +618,73 @@ function getDeckNames(keepingArray){
 }
 
 function getKeepingCards(sort = true){
-    //alphabetize
-    keepingArray = keepingcards.replaceAll(" ", "").split(",");
     if (sort){
-        keepingArray.sort();
+        keepingcards.sort();
+        return keepingcards;
     }
-    
-    if (keepingArray.length == 1 && keepingArray[0] == ''){
-        return [];
-    }
-    
-    return keepingArray;
-}
-
-function getLogs(){
-    return logs.split("\n");
+    return keepingcards;
 }
 
 function getFutureCards(sort = true){
-    //alphabetize
-    futureCardsArray = futurecards.replaceAll(" ", "").split(",");
     if (sort){
-        futureCardsArray.sort();
+        futurecards.sort();
+        return futurecards;
     }
     
-    if (futureCardsArray.length == 1 && futureCardsArray[0] == ''){
-        return [];
-    }
-    
-    return futureCardsArray;
+    return futurecards;
 }
 
 function getNeededCards(){
-    // alphabetize
-    var keepingArray = getKeepingCards();
-    keepingArray.sort()
+    return [allneeds, collects, singles, futures];
+}
 
-    if (highprioritydecks != '')
-    {
-        collectDecks = highprioritydecks.replaceAll(" ", "").split(",");
-    }
-    else{ collectDecks = []; }
+function generateNeededCards(){
 
-    if (allisodecks != '')
-    {
-        deckNames = allisodecks.replaceAll(" ", "").split(",");
-    }
-    else{deckNames = [];}
-
-    if (singlecards != '')
-    {
-        singleCards = singlecards.replaceAll(" ", "").split(",");
-    }
-    else{singleCards = [];}
-    singleCards.sort()
-    deckNames.sort()
-
-    //find collect needed cards
-    var collects = [];
-    collectDecks.forEach( deckName => {
+    //find deck needed cards
+    allisodecks.forEach( deckName => {
         for (var index = 1; index < 21; index++){
             var cardNumber = ''
             if (index < 10){ cardNumber = "0"+index}
             else {cardNumber += index;}
 
-            if (!keepingArray.includes(deckName + cardNumber)){
+            if (!keepingcards.includes(deckName + cardNumber)){
                 collects.push(deckName + cardNumber);
             }
         }
 
     })
 
-    //remove collect decks from all decks
-    deckNames = deckNames.filter(deck => !collectDecks.includes(deck));
-    // find needed cards from future
-    var neededCards = [];
-    deckNames.forEach( deckName => {
+    //find future needed cards
+    allfuturedecks.forEach( deckName => {
         for (var index = 1; index < 21; index++){
             var cardNumber = ''
             if (index < 10){ cardNumber = "0"+index}
             else {cardNumber += index;}
 
-            if (!keepingArray.includes(deckName + cardNumber)){
-                neededCards.push(deckName + cardNumber);
+            if (!futurecards.includes(deckName + cardNumber)){
+                futures.push(deckName + cardNumber);
             }
         }
 
     })
 
     // find needed single cards
-    singles = singleCards.filter(card => !keepingArray.includes(card))
-    futures = neededCards;
+    singles = singlecards.filter(card => !keepingcards.includes(card))
 
-    var allneeds = collects.concat(singles).concat(futures);
-    console.log(collects)
-    console.log(singles)
-    console.log(futures)
+    allneeds = collects.concat(singles)
     allneeds.sort();
-
-    return [allneeds, collects, singles, futures];
+    collects.sort();
+    singles.sort();
+    futures.sort();
 }
 
 function getTradingCards(sort = true){
-    //alphabetize
-    fortradeArray = tradingcards.replaceAll(" ", "").split(",");
     if (sort){
-        fortradeArray.sort();
+        tradingcards.sort();
+        return tradingcards;
     }
     
-    if (fortradeArray.length == 1 && fortradeArray[0] == ''){
-        return [];
-    }
-    
-    return fortradeArray;
+    return tradingcards;
 }
 
 function insertImages(type, cardsection){
@@ -799,237 +796,171 @@ function makeImgTags(deckNames, keeptradeidentifier){
 
 }
 
-function readLogs(logData){
+function readLogs(){
     var totalCardsTraded = 0;
     var spentSketchpads = 0;
-    var crayons = [0, 0, 0, 0, 0, 0, 0, 0];
+    keepingcards = getKeepingCards();
+    tradingcards = getTradingCards();
+    futurecards = getFutureCards();
+
+    var completedDeckCounts = {};
+
+    var logData = logs.split("\n");
 
     logData.forEach(log => {
-        var startIndex = log.indexOf(": ") + 1;
+        log = log.toLowerCase()
 
-        if (log.includes("received from") || log.includes("gifted by")){
-            var cardsReceivedString = log.substring(startIndex, log.length)
-            var cardsReceived = cardsReceivedString.split(",");
-            //check for crayons
-            cardsReceived.forEach( tradeItem => {
-                tradeItem = tradeItem.trim()
-                if (tradeItem.includes(" crayon") || tradeItem.includes(" crayons")){
-                    // get number of crayons traded
-                    var seperatedCrayon = tradeItem.split(" ")
-                    var numCrayons = parseInt(seperatedCrayon[0])
-                    var crayonColor = seperatedCrayon[1]
+        var receiveStart = log.indexOf(":") + 1;
+        var receiveEnd = log.length;
+        var lostStart = log.indexOf(":") + 1;
+        var lostEnd = log.length;
+        var received = [];
+        var lost = [];
+        var countForSketchpad = false;
+        var needsSorting = false;
 
-                    switch(seperatedCrayon[1]){
-                        case "red": 
-                            crayons[0] += numCrayons;
-                            break;
-                        case "orange": 
-                            crayons[1] += numCrayons;
-                            break;
-                        case "yellow": 
-                            crayons[2] += numCrayons;
-                            break;
-                        case "green": 
-                            crayons[3] += numCrayons;
-                            break;
-                        case "blue": 
-                            crayons[4] += numCrayons;
-                            break;
-                        case "purple": 
-                            crayons[5] += numCrayons;
-                            break;
-                        case "brown": 
-                            crayons[6] += numCrayons;
-                            break;
-                        case "gray": 
-                            crayons[7] += numCrayons;
-                            break;
-                    }
-                }
-            })
+
+        if (log.includes("received from") || (log.includes("gifted by"))){
+            received = log.substring(receiveStart, receiveEnd).split(",");
         }
         else if (log.includes("gifted to")){
-            var cardsTraded = log.substring(startIndex, log.length).split(",");
-            totalCardsTraded += cardsTraded.length;
-
-            //check for crayons traded
-            cardsTraded.forEach( tradeItem => {
-                tradeItem = tradeItem.trim()
-                if (tradeItem.includes(" crayon") || tradeItem.includes(" crayons")){
-                    totalCardsTraded -= 1;
-                    // get number of crayons traded
-                    var seperatedCrayon = tradeItem.split(" ")
-                    var numCrayons = parseInt(seperatedCrayon[0])
-                    var crayonColor = seperatedCrayon[1]
-
-                    switch(seperatedCrayon[1]){
-                        case "red": 
-                            crayons[0] -= numCrayons;
-                            break;
-                        case "orange": 
-                            crayons[1] -= numCrayons;
-                            break;
-                        case "yellow": 
-                            crayons[2] -= numCrayons;
-                            break;
-                        case "green": 
-                            crayons[3] -= numCrayons;
-                            break;
-                        case "blue": 
-                            crayons[4] -= numCrayons;
-                            break;
-                        case "purple": 
-                            crayons[5] -= numCrayons;
-                            break;
-                        case "brown": 
-                            crayons[6] -= numCrayons;
-                            break;
-                        case "gray": 
-                            crayons[7] -= numCrayons;
-                            break;
-                    }
-                }
-            })
-        }
-        else if (log.includes("traded to")){
-            var endingIndex = log.lastIndexOf(" for ")
-            var cardsTradedString = log.substring(startIndex, endingIndex)
-            var cardsTraded = cardsTradedString.split(",");
-            totalCardsTraded += cardsTraded.length;
-            var cardsReceivedString = log.substring(endingIndex + 5, log.length);
-            var cardsReceived = cardsReceivedString.split(",")
-
-            //check for crayons traded
-            cardsTraded.forEach( tradeItem => {
-                tradeItem = tradeItem.trim()
-                if (tradeItem.includes(" crayon") || tradeItem.includes(" crayons")){
-                    totalCardsTraded -= 1;
-                    // get number of crayons traded
-                    var seperatedCrayon = tradeItem.split(" ")
-                    var numCrayons = parseInt(seperatedCrayon[0])
-                    var crayonColor = seperatedCrayon[1]
-
-                    switch(seperatedCrayon[1]){
-                        case "red": 
-                            crayons[0] -= numCrayons;
-                            break;
-                        case "orange": 
-                            crayons[1] -= numCrayons;
-                            break;
-                        case "yellow": 
-                            crayons[2] -= numCrayons;
-                            break;
-                        case "green": 
-                            crayons[3] -= numCrayons;
-                            break;
-                        case "blue": 
-                            crayons[4] -= numCrayons;
-                            break;
-                        case "purple": 
-                            crayons[5] -= numCrayons;
-                            break;
-                        case "brown": 
-                            crayons[6] -= numCrayons;
-                            break;
-                        case "gray": 
-                            crayons[7] -= numCrayons;
-                            break;
-                    }
-                }
-            })
-            // check for crayons recieved
-            cardsReceived.forEach( tradeItem => {
-                tradeItem = tradeItem.trim()
-                if (tradeItem.includes(" crayon") || tradeItem.includes(" crayons")){
-                    // get number of crayons traded
-                    var seperatedCrayon = tradeItem.split(" ")
-                    var numCrayons = parseInt(seperatedCrayon[0])
-                    var crayonColor = seperatedCrayon[1]
-
-                    switch(seperatedCrayon[1]){
-                        case "red": 
-                            crayons[0] += numCrayons;
-                            break;
-                        case "orange": 
-                            crayons[1] += numCrayons;
-                            break;
-                        case "yellow": 
-                            crayons[2] += numCrayons;
-                            break;
-                        case "green": 
-                            crayons[3] += numCrayons;
-                            break;
-                        case "blue": 
-                            crayons[4] += numCrayons;
-                            break;
-                        case "purple": 
-                            crayons[5] += numCrayons;
-                            break;
-                        case "brown": 
-                            crayons[6] += numCrayons;
-                            break;
-                        case "gray": 
-                            crayons[7] += numCrayons;
-                            break;
-                    }
-                }
-            })
+            lost = log.substring(lostStart, lostEnd).split(",");
+            countForSketchpad = true;
         }
         else if (log.includes("lost to")){
-            var cardsTradedString = log.substring(startIndex, endingIndex)
-            var cardsTraded = cardsTradedString.split(",");
+            lost = log.substring(lostStart, lostEnd).split(",");
+        }
+        else if (log.includes("traded to")){
+            var breakIndex = log.lastIndexOf(" for ");
+            lostStart = log.indexOf(":") + 1;
+            lostEnd = breakIndex;
+            receiveStart = breakIndex + 5;
+            receiveEnd = log.length;
 
-            //check for crayons traded
-            cardsTraded.forEach( tradeItem => {
-                tradeItem = tradeItem.trim()
-                if (tradeItem.includes(" crayon") || tradeItem.includes(" crayons")){
-                    // get number of crayons traded
-                    var seperatedCrayon = tradeItem.split(" ")
-                    var numCrayons = parseInt(seperatedCrayon[0])
-                    var crayonColor = seperatedCrayon[1]
+            countForSketchpad = true;
+        }
 
-                    switch(seperatedCrayon[1]){
-                        case "red": 
-                            crayons[0] -= numCrayons;
-                            break;
-                        case "orange": 
-                            crayons[1] -= numCrayons;
-                            break;
-                        case "yellow": 
-                            crayons[2] -= numCrayons;
-                            break;
-                        case "green": 
-                            crayons[3] -= numCrayons;
-                            break;
-                        case "blue": 
-                            crayons[4] -= numCrayons;
-                            break;
-                        case "purple": 
-                            crayons[5] -= numCrayons;
-                            break;
-                        case "brown": 
-                            crayons[6] -= numCrayons;
-                            break;
-                        case "gray": 
-                            crayons[7] -= numCrayons;
-                            break;
+        received.forEach( tradeItem => {
+            tradeItem = tradeItem.trim().toLowerCase();
+    
+            //crayons
+            if (tradeItem.endsWith(" crayon") || tradeItem.endsWith(" crayons")){
+                // get number of crayons traded
+                var seperatedCrayon = tradeItem.split(" ")
+                var numCrayons = parseInt(seperatedCrayon[0])
+
+                switch(seperatedCrayon[1]){
+                    case "red": 
+                        crayons[0] += numCrayons;
+                        break;
+                    case "orange": 
+                        crayons[1] += numCrayons;
+                        break;
+                    case "yellow": 
+                        crayons[2] += numCrayons;
+                        break;
+                    case "green": 
+                        crayons[3] += numCrayons;
+                        break;
+                    case "blue": 
+                        crayons[4] += numCrayons;
+                        break;
+                    case "purple": 
+                        crayons[5] += numCrayons;
+                        break;
+                    case "brown": 
+                        crayons[6] += numCrayons;
+                        break;
+                    case "gray": 
+                        crayons[7] += numCrayons;
+                        break;
+                }
+            }
+            // ignore candies
+            else if (!tradeItem.endsWith(" candy") && !tradeItem.endsWith(" candies") && tradeItem != ''){
+                var deck = tradeItem.substring(0, tradeItem.length - 2);
+                if (highprioritydecks.includes(deck) || allisodecks.includes(deck)){
+                    keepingcards.unshift(tradeItem);
+                    //count cards in keeping deck
+                    if (deck in completedDeckCounts){
+                        completedDeckCounts[deck]++;
+                        //check if deck completed - remove from collecting isos
+                        if (completedDeckCounts[deck] >= 20){
+                            allisodecks = allisodecks.filter(element => element !== deck);
+                            delete completedDeckCounts[deck];
+                        }
+                    }else{
+                        completedDeckCounts[deck] = 1;
                     }
                 }
-                else if (tradeItem.includes(" sketchpad") || tradeItem.includes(" sketchpads")){
-                    // get number of sketchpads turned in
-                    var seperatedSketchpad = tradeItem.split(" ")
-                    var numSketchpads = parseInt(seperatedSketchpad[0])
-                    spentSketchpads += numSketchpads
+                else if (singlecards.includes(tradeItem)){
+                    keepingcards.unshift(tradeItem);
+                    singlecards = singlecards.filter(element => element != tradeItem);
                 }
-            })
-        }
+                else if (allfuturedecks.includes(deck)){
+                    futurecards.unshift(tradeItem);
+                }
+                else{
+                    tradingcards.unshift(tradeItem);
+                }
+            }
+        })
+
+        lost.forEach( tradeItem => {
+            tradeItem = tradeItem.trim().toLowerCase();
+    
+            //crayons
+            if (tradeItem.endsWith(" crayon") || tradeItem.endsWith(" crayons")){
+                // get number of crayons traded
+                var seperatedCrayon = tradeItem.split(" ")
+                var numCrayons = parseInt(seperatedCrayon[0])
+
+                switch(seperatedCrayon[1]){
+                    case "red": 
+                        crayons[0] -= numCrayons;
+                        break;
+                    case "orange": 
+                        crayons[1] -= numCrayons;
+                        break;
+                    case "yellow": 
+                        crayons[2] -= numCrayons;
+                        break;
+                    case "green": 
+                        crayons[3] -= numCrayons;
+                        break;
+                    case "blue": 
+                        crayons[4] -= numCrayons;
+                        break;
+                    case "purple": 
+                        crayons[5] -= numCrayons;
+                        break;
+                    case "brown": 
+                        crayons[6] -= numCrayons;
+                        break;
+                    case "gray": 
+                        crayons[7] -= numCrayons;
+                        break;
+                }
+            }
+            else if (tradeItem.endsWith(" sketchpad") || tradeItem.endsWith(" sketchpads")){
+                // get number of sketchpads turned in
+                var seperatedSketchpad = tradeItem.split(" ")
+                var numSketchpads = parseInt(seperatedSketchpad[0])
+                spentSketchpads += numSketchpads
+            }
+            // assume card
+            else {
+                if (countForSketchpad){
+                    totalCardsTraded++;
+                }
+                tradingcards = tradingcards.filter(element => element !== tradeItem);
+            }
+        })
 
     })
 
-    var completedSketchpads = Math.floor((totalCardsTraded + additionalCurrentSketchpadPoints) / 20) - spentSketchpads + additionalCompletedSketchpads;
-    var currentSketchpad = (totalCardsTraded + additionalCurrentSketchpadPoints) % 20
-
-    return [completedSketchpads, currentSketchpad, crayons]
+    completedsketchpads = Math.floor((totalCardsTraded + currentsketchpad) / 20) - spentSketchpads + currentsketchpad;
+    currentsketchpad = (totalCardsTraded + currentsketchpad) % 20
 }
 
 function searchShowing(){
@@ -1111,7 +1042,7 @@ function showPortfolio(type){
 }
 
 function sortNeededDecks(){
-    var neededDecks = allisodecks.replaceAll(" ", '').split(",")
+    var neededDecks = allisodecks;
     
     var redDiv = document.createElement("div");
     var orangeDiv = document.createElement("div");
@@ -1196,12 +1127,17 @@ function sortNeededDecks(){
 }
 
 function sortSingleCards(){
-    var singleCardsArray = singlecards.replaceAll(" ", '').split(",")
+    var singleCardsArray = singlecards
     singleCardsArray.sort()
     var cardLinks = "<p>";
     singleCardsArray.forEach( card => {
         deckName = card.substring(0, card.length-2)
         cardLinks += '<a href="https://colors-tcg.eu/viewcards.php?deck=' + deckName + '" target="_blank">' + card + "</a>, "
     })
-    document.getElementById("singlecardscontainer").innerHTML = cardLinks.substring(0, cardLinks.length-2) + "</p>"
+    if (singleCardsArray.length > 0){
+        document.getElementById("singlecardscontainer").innerHTML = cardLinks.substring(0, cardLinks.length-2) + "</p>"
+    }
+    else{
+        document.getElementById("singlecardscontainer").innerHTML = cardLinks + "</p>"
+    }
 }

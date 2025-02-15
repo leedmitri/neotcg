@@ -1,7 +1,8 @@
 /*
-    list cards from decks you're planning on collecting in the future
-    put newest cards at the beginning of the string
-    
-    ex: "card01, card02...."
+   if you ever want to archive/ delete part of your log, 
+   or are starting the log format while already having a different format log, 
+   set this variable with your current list of future cards.
+   The below variables will be the starting point of this section of your collection that the log will add/remove from.
+        ex: "card01, card02...."
 */
 var futurecards = "";
