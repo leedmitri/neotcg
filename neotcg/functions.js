@@ -837,12 +837,14 @@ function readLogs(){
             receiveStart = breakIndex + 5;
             receiveEnd = log.length;
 
+            received = log.substring(receiveStart, receiveEnd).split(",");
+            lost = log.substring(lostStart, lostEnd).split(",");
+
             countForSketchpad = true;
         }
 
         received.forEach( tradeItem => {
             tradeItem = tradeItem.trim().toLowerCase();
-    
             //crayons
             if (tradeItem.endsWith(" crayon") || tradeItem.endsWith(" crayons")){
                 // get number of crayons traded
@@ -851,28 +853,28 @@ function readLogs(){
 
                 switch(seperatedCrayon[1]){
                     case "red": 
-                        crayons[0] += numCrayons;
+                        crayons["red"] += numCrayons;
                         break;
                     case "orange": 
-                        crayons[1] += numCrayons;
+                        crayons["orange"] += numCrayons;
                         break;
                     case "yellow": 
-                        crayons[2] += numCrayons;
+                        crayons["yellow"] += numCrayons;
                         break;
                     case "green": 
-                        crayons[3] += numCrayons;
+                        crayons["green"] += numCrayons;
                         break;
                     case "blue": 
-                        crayons[4] += numCrayons;
+                        crayons["blue"] += numCrayons;
                         break;
                     case "purple": 
-                        crayons[5] += numCrayons;
+                        crayons["purple"] += numCrayons;
                         break;
                     case "brown": 
-                        crayons[6] += numCrayons;
+                        crayons["brown"] += numCrayons;
                         break;
                     case "gray": 
-                        crayons[7] += numCrayons;
+                        crayons["gray"] += numCrayons;
                         break;
                 }
             }
@@ -917,28 +919,28 @@ function readLogs(){
 
                 switch(seperatedCrayon[1]){
                     case "red": 
-                        crayons[0] -= numCrayons;
+                        crayons["red"] -= numCrayons;
                         break;
                     case "orange": 
-                        crayons[1] -= numCrayons;
+                        crayons["orange"] -= numCrayons;
                         break;
                     case "yellow": 
-                        crayons[2] -= numCrayons;
+                        crayons["yellow"] -= numCrayons;
                         break;
                     case "green": 
-                        crayons[3] -= numCrayons;
+                        crayons["green"] -= numCrayons;
                         break;
                     case "blue": 
-                        crayons[4] -= numCrayons;
+                        crayons["blue"] -= numCrayons;
                         break;
                     case "purple": 
-                        crayons[5] -= numCrayons;
+                        crayons["purple"] -= numCrayons;
                         break;
                     case "brown": 
-                        crayons[6] -= numCrayons;
+                        crayons["brown"] -= numCrayons;
                         break;
                     case "gray": 
-                        crayons[7] -= numCrayons;
+                        crayons["gray"] -= numCrayons;
                         break;
                 }
             }
