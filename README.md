@@ -39,46 +39,8 @@ var deckDictionary = {
 }
 ```
 
-## UPDATEtradingcards.js
-Contains a single variable "tradingcards" that holds a string of comma seperated card names. The cards names should be of cards the player owns and wants to trade, beginning with recently received cards.
-
-The format for the variable is:
-```
-var tradingcards = "CARDNAME01, CARDNAME02, CARDNAME03";
-```
-For example, if the player had cards obnoxious02, help06, and sturdy09 for trade, the format would be:
-```
-var tradingcards = "obnoxious02, help06, sturdy09";
-```
-
-## UPDATEkeepingcards.js
-Contains a single variable "tradingcards" that holds a string of comma seperated card names. The cards names should be of cards the player owns and wants to trade.
-
-The format for the variable is:
-```
-var keepingcards = "card01, card02, card03";
-```
-For example, if the player owned and wanted to keep the cards obnoxious02, help06, and sturdy09, the format would be:
-```
-var keepingcards = "obnoxious02, help06, sturdy09";
-```
-
-
-## UPDATEfuturecards.js
-Contains a single variable "futurecards" that holds a string of comma seperated card names. The card names should be cards of decks the player plans on collecting in the future.
-
-The format for the variable is:
-```
-var futurecards = "card01, card02, card03";
-```
-For example, if the player had the cards obnoxious02, help06, and sturdy09, and wanted to collect their respective decks in the future, the format would be:
-```
-var futurecards = "obnoxious02, help06, sturdy09";
-```
-
-
 ## UPDATElogs.js
-Contains two variables, "logs" and "unformattedlogs", that holds multi-line strings of the player's Colors TCG log. The player is required to use specific keywords in order to enable functionality for some of the setup's pages, such as crayon counting and sketchpad marking
+Contains two variables, "logs" and "unformattedlogs", that holds multi-line strings of the player's Colors TCG log. The player is required to use specific keywords in order to enable functionality for some of the setup's pages, such as crayon counting and sketchpad marking.
 
 Important Notes:  
     - The bolded inputs can be formatted however you want, as long as it comes after the proper command and before the colon (:)  
@@ -128,7 +90,7 @@ var pendingtrades = ["PLAYERNAME1: card01, card02", "PLAYERNAME2: card03, card04
 ```
 ### highprioritydecks, allisodecks, singlecards
 **HIGH PRIORITY DECKS**  
- provide a list of decks that you are most seeking
+ provide a list of decks that you are most seeking that will display on your collect page.
  a placeholder card will be used to represent the cards you do not own from the deck (emptycard.png)
  *put the deck name, not card numbers (ie sakura, not sakura01)*
 
@@ -140,6 +102,11 @@ var pendingtrades = ["PLAYERNAME1: card01, card02", "PLAYERNAME2: card03, card04
  **SINGLE CARDS**  
  if you want specific cards and not the entire deck, list them here
  *put the card name, not the deck name (ie sakura01, not sakura)*  
+The format for the variable is:
+
+ **FUTURE CARDS**  
+ cards that will not pop up under needed, but you'd like to save for collecting in the future
+*put the deck name, not card numbers (ie sakura, not sakura01)* 
 The format for the variable is:
 ```
 var highprioritydecks = "deckone, decktwo, deckthree";
@@ -186,6 +153,42 @@ var tradepost = "https://colors-trade.dreamwidth.org/";
 var tradetag ="https://colors-trade.dreamwidth.org/tag/player:+PLAYERNAME";
 ```
 
+## UPDATEtradingcards.js
+Contains a single variable "tradingcards" that holds a string of comma seperated card names.  If you ever want to archive/ delete part of your log, or are starting the log format while already having a different format log, set this variable with your current list of trading cards.
+
+The format for the variable is:
+```
+var tradingcards = "CARDNAME01, CARDNAME02, CARDNAME03";
+```
+For example, if the player had cards obnoxious02, help06, and sturdy09 for trade, the format would be:
+```
+var tradingcards = "obnoxious02, help06, sturdy09";
+```
+
+## UPDATEkeepingcards.js
+Contains a single variable "keepingcards" that holds a string of comma seperated card names. If you ever want to archive/ delete part of your log, or are starting the log format while already having a different format log, set this variable with your current list of keeping cards.
+
+The format for the variable is:
+```
+var keepingcards = "card01, card02, card03";
+```
+For example, if the player owned and wanted to keep the cards obnoxious02, help06, and sturdy09, the format would be:
+```
+var keepingcards = "obnoxious02, help06, sturdy09";
+```
+
+## UPDATEfuturecards.js
+Contains a single variable "futurecards" that holds a string of comma seperated card names. If you ever want to archive/ delete part of your log, or are starting the log format while already having a different format log, set this variable with your current list of future cards.
+
+The format for the variable is:
+```
+var futurecards = "card01, card02, card03";
+```
+For example, if the player had the cards obnoxious02, help06, and sturdy09, and wanted to collect their respective decks in the future, the format would be:
+```
+var futurecards = "obnoxious02, help06, sturdy09";
+```
+
 # Changing Locations of Setup Items
 Throughout the setup, there are containers in which data pulled from the UPDATE files are inserted into in order to be displayed. This connection is through a paticular function being called in a heading script tag, and the container being located on the given page. Setup item's can be moved around as long as the container is named the same, and the appropriate function is called in the heading script tag. 
 
@@ -196,7 +199,7 @@ Styling is completely up to change within the style.css object. Be careful of wh
 
 # FAQ & Debugging
 **Where do I put signatures?**  
-Signatures can be listed in UPDATEkeepingcards.js, and their image placed in your cards folder as if a normal card.
+Signatures can be listed in logs as if a normal card, and their image placed in your cards folder.
 
 **Where do I put mastery images?**  
 Mastery images go in your cards folder as if a normal card. When you master a deck, it will automatically put the mastery image on your home page.
