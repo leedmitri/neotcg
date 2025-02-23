@@ -805,7 +805,7 @@ function readLogs(){
 
     var completedDeckCounts = {};
 
-    var logData = logs.split("\n");
+    var logData = logs.split("\n").reverse();
 
     logData.forEach(log => {
         log = log.toLowerCase()
@@ -951,11 +951,11 @@ function readLogs(){
                 spentSketchpads += numSketchpads
             }
             // assume card
-            else {
+            else if (tradeItem != ''){
                 if (countForSketchpad){
                     totalCardsTraded++;
                 }
-                tradingcards = tradingcards.filter(element => element !== tradeItem);
+                tradingcards = tradingcards.filter(element => element != tradeItem);
             }
         })
 
