@@ -13,6 +13,10 @@ if (futurecards != ''){
     futurecards = futurecards.replaceAll(" ", "").split(",");
 }
 else{ futurecards = []; }
+if (signatures != ''){
+    signatures = signatures.replaceAll(" ", "").split(",");
+}
+else{ signatures = []; }
 
 //collecting
 if (highprioritydecks != ''){
@@ -413,8 +417,7 @@ function fillNewCardsContainer(type){
 
 // INSERTS INTO signaturescontainer
 function fillSignatures(){
-    var keepingArray = getKeepingCards();
-    var signaturesArray = keepingArray.filter( card => card.includes("sig_"));
+    var signaturesArray = signatures
     
     if (signaturesArray.length != 0){
         document.getElementById("signaturescontainer").innerHTML = "";
@@ -878,6 +881,10 @@ function readLogs(){
                         break;
                 }
             }
+            //signatures
+            else if (tradeItem.startsWith("sig_")){
+                signatures.unshift(tradeItem);
+            }
             // ignore candies
             else if (!tradeItem.endsWith(" candy") && !tradeItem.endsWith(" candies") && tradeItem != ''){
                 var deck = tradeItem.substring(0, tradeItem.length - 2);
@@ -943,6 +950,10 @@ function readLogs(){
                         crayons["gray"] -= numCrayons;
                         break;
                 }
+            }
+            //signatures
+            else if (tradeItem.startsWith("sig_")){
+                signatures = signatures.filter(element => element != tradeItem);
             }
             else if (tradeItem.endsWith(" sketchpad") || tradeItem.endsWith(" sketchpads")){
                 // get number of sketchpads turned in

@@ -90,6 +90,7 @@ var additionalCrayons = {
 };
 var additionalCurrentSketchpadPoints = 0;
 var additionalCompletedSketchpads = 0;
+var signatures = ""; // sig_1, sig_2, sig_3...
 
 /*
     below should be one and done or infrequent changes
