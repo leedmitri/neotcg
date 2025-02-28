@@ -298,7 +298,7 @@ function fillLogs(){
 
 // INSERTS INTO totalcardscontainer
 function fillTotalCards(){
-    var totalcards = getKeepingCards().length + getTradingCards().length + getFutureCards().length;
+    var totalcards = getKeepingCards().length + getTradingCards().length + getFutureCards().length + signatures.length;
     var levelString = "";
     if (totalcards > 14401){
         var modifier = Math.floor((totalCards % 14401) / 3) ;
@@ -953,7 +953,9 @@ function readLogs(){
             }
             //signatures
             else if (tradeItem.startsWith("sig_")){
-                signatures = signatures.filter(element => element != tradeItem);
+                var removeIndex = signatures.findIndex(element => element == tradeItem);
+                signatures.splice(removeIndex, 1)
+                totalCardsTraded++;
             }
             else if (tradeItem.endsWith(" sketchpad") || tradeItem.endsWith(" sketchpads")){
                 // get number of sketchpads turned in
@@ -966,7 +968,8 @@ function readLogs(){
                 if (countForSketchpad){
                     totalCardsTraded++;
                 }
-                tradingcards = tradingcards.filter(element => element != tradeItem);
+                var removeIndex = tradingcards.findIndex(element => element == tradeItem);
+                tradingcards.splice(removeIndex, 1)
             }
         })
 
