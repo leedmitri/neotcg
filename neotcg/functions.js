@@ -113,58 +113,64 @@ function cardTextSearch(type){
     document.getElementById("searchresultcontainer").innerHTML += "future: " + futureFound.length + "<br>" + futureFound.join(", ") + "<br>";
 }
 
+function displayDeck(deck){
+     // create elements
+     var deckDiv = document.createElement("div");
+     var deckHeader = document.createElement("p");
+     var deckLink = document.createElement("a")
+     var deckImgDiv = document.createElement("div")
+
+     //set bg colors
+     // r #ffdbdb | o #ffeee2 | y #fcfade | g #e2fce6| b #dff2fd | p #e3e3ff| br #e9d4b7 | gr #d4d4d4
+     // check if deckdictionary had deck 
+     var headerColor = getColorSeries(deck)[2].toLowerCase();
+
+     deckDiv.setAttribute("class", "deckdiv")
+     deckHeader.setAttribute("class", "deckheader deck" + headerColor)
+     deckLink.setAttribute("class", "decklink")
+     deckLink.setAttribute("href", "https://colors-tcg.eu/viewcards.php?deck=" + deck)
+     deckLink.innerHTML = deck
+     deckImgDiv.setAttribute("class", "deckimgdiv")
+
+     deckHeader.appendChild(deckLink)
+     deckDiv.appendChild(deckHeader)
+
+     var cardsOwned = getKeepingCards();
+
+     // make card setup
+     for (var index = 1; index < 21; index++){
+         var cardNumber = ''
+         if (index < 10){ cardNumber = "0"+index}
+         else {cardNumber += index;}
+
+         if (cardsOwned.includes(deck + cardNumber)){
+             var imgTag = document.createElement("img");
+             imgTag.setAttribute("src", "cards/" + deck + cardNumber + ".gif")
+             imgTag.setAttribute("title", deck + cardNumber)
+             imgTag.setAttribute("alt", deck + cardNumber)
+
+             deckImgDiv.appendChild(imgTag)
+         }
+         else{
+             var imgTag = document.createElement("img");
+             imgTag.setAttribute("src", "cards/" + deck + "00.gif")
+             imgTag.setAttribute("onerror", "this.src='cards/placeholdercard.gif'")
+             imgTag.setAttribute("title", deck + "placeholdercard")
+             imgTag.setAttribute("alt", deck + "placeholdercard")
+
+             deckImgDiv.appendChild(imgTag)
+         }
+     }
+
+     deckDiv.appendChild(deckImgDiv)
+     return deckDiv;
+}
+
 // INSERTS INTO: fullsetisocontainer
 function createPriorityDecks(){
-    var cardsOwned = getKeepingCards();
     var priorityNeeds = highprioritydecks;
     priorityNeeds.forEach( deck => {
-        // create elements
-        var deckDiv = document.createElement("div");
-        var deckHeader = document.createElement("p");
-        var deckLink = document.createElement("a")
-        var deckImgDiv = document.createElement("div")
-
-        //set bg colors
-        // r #ffdbdb | o #ffeee2 | y #fcfade | g #e2fce6| b #dff2fd | p #e3e3ff| br #e9d4b7 | gr #d4d4d4
-        // check if deckdictionary had deck 
-        var headerColor = getColorSeries(deck)[2].toLowerCase();
-
-        deckDiv.setAttribute("class", "deckdiv")
-        deckHeader.setAttribute("class", "deckheader deck" + headerColor)
-        deckLink.setAttribute("class", "decklink")
-        deckLink.setAttribute("href", "https://colors-tcg.eu/viewcards.php?deck=" + deck)
-        deckLink.innerHTML = deck
-        deckImgDiv.setAttribute("class", "deckimgdiv")
-
-        deckHeader.appendChild(deckLink)
-        deckDiv.appendChild(deckHeader)
-
-        // make card setup
-        for (var index = 1; index < 21; index++){
-            var cardNumber = ''
-            if (index < 10){ cardNumber = "0"+index}
-            else {cardNumber += index;}
-
-            if (cardsOwned.includes(deck + cardNumber)){
-                var imgTag = document.createElement("img");
-                imgTag.setAttribute("src", "cards/" + deck + cardNumber + ".gif")
-                imgTag.setAttribute("title", deck + cardNumber)
-                imgTag.setAttribute("alt", deck + cardNumber)
-
-                deckImgDiv.appendChild(imgTag)
-            }
-            else{
-                var imgTag = document.createElement("img");
-                imgTag.setAttribute("src", "cards/" + deck + "00.gif")
-                imgTag.setAttribute("onerror", "this.src='cards/placeholdercard.gif'")
-                imgTag.setAttribute("title", deck + "placeholdercard")
-                imgTag.setAttribute("alt", deck + "placeholdercard")
-
-                deckImgDiv.appendChild(imgTag)
-            }
-        }
-
-        deckDiv.appendChild(deckImgDiv)
+        var deckDiv = displayDeck(deck);
         document.getElementById("fullsetisocontainer").appendChild(deckDiv)
     })
 }
@@ -434,28 +440,34 @@ function fillSignatures(){
     }
 }
 
-function fillMasteries(){
-    var keepingArray = getKeepingCards();
-    var keepingDeckDictionary = getDeckNames(keepingArray);
-
+function getMasteries(){
+    var keepingDeckDictionary = getDeckNames(keepingcards);
+    var masteries = [];
     if (Object.keys(keepingDeckDictionary).length != 0){
-        document.getElementById("masteriescontainer").innerHTML = "";
         Object.keys(keepingDeckDictionary).forEach( keepingDeck => {
             // remove duplicates 
             var cardsOwnedFromDeck = keepingDeckDictionary[keepingDeck];
             cardsOwnedFromDeck = cardsOwnedFromDeck.filter( (card, index) => cardsOwnedFromDeck.indexOf(card) == index )
             if (cardsOwnedFromDeck.length >= 20){
-                var img = document.createElement("img");
-                img.src = "cards/" + keepingDeck + "master.gif";
-                img.alt = keepingDeck + "master";
-                img.title = keepingDeck + "master";
-                document.getElementById("masteriescontainer").appendChild(img);
+                masteries.push(keepingDeck)
             }
         })
-        // if no masteries found
-        if (document.getElementById("masteriescontainer").innerHTML == ""){
-            document.getElementById("masteriescontainer").innerHTML = "none";
-        }
+    }
+    return masteries;
+}
+
+function fillMasteries(){
+    var keepingArray = getKeepingCards();
+    var masteries = getMasteries();
+    if (masteries.length != 0){
+        document.getElementById("masteriescontainer").innerHTML = ""
+        masteries.forEach( deck => {
+            var img = document.createElement("img");
+            img.src = "cards/" + deck + "master.gif";
+            img.alt = deck + "master";
+            img.title = deck + "master";
+            document.getElementById("masteriescontainer").appendChild(img);
+        })
     }
     else{
         document.getElementById("masteriescontainer").innerHTML = "none";
@@ -480,6 +492,114 @@ function fillTradingCardsTextPage(){
     document.getElementById("cardstextcontainer").appendChild(cardsp);
     document.getElementById("cardstextareacontainer").value = allCardsString
     document.getElementById("duplicatestextarea").value = duplicates.join(", ")
+}
+
+function fillMassDecksPage(){
+
+    massdecks.forEach( (massDeck) => {
+
+        var seriesDecks = [];
+        // get all series' decks
+        var {massDeckName, massDeckImgName, seriesList, deckList, singleList} = massDeck;
+        var massDeckDiv = document.createElement('div');
+        massDeckDiv.style = "display: flex; justify-content: center; flex-direction: column;";
+
+        var massDeckImg = document.createElement("img")
+        massDeckImg.setAttribute("src", "massdecks/" + massDeckImgName)
+        massDeckImg.onclick = function(){showMassDeck(massDeckName)};
+        massDeckImg.style="align-self: center;"
+        massDeckDiv.appendChild(massDeckImg)
+        
+        var massDeckP = document.createElement('p');
+        massDeckP.innerHTML = massDeckName;
+        massDeckDiv.appendChild(massDeckP)
+
+        var insideDiv = document.createElement('div');
+        insideDiv.id = massDeckName.replaceAll(" ", '');
+        insideDiv.style="display:none; justify-content: center; flex-direction:column;";
+
+        seriesList.forEach( (series) => {
+            var seriesDiv = document.createElement('div');
+            var seriesP = document.createElement('p');
+            seriesP.innerHTML = "Series: " + series;
+            seriesDiv.appendChild(seriesP)
+
+            var seriesDecksDiv = document.createElement('div');
+            seriesDecks = Object.keys(Object.fromEntries(Object.entries(deckDictionary).filter(([k,v]) => v[0] == series)));
+            seriesDecks.sort();
+            seriesDecks.forEach( deck => {
+                seriesDecksDiv.appendChild(displayDeck(deck));
+            })
+
+            seriesDiv.appendChild(seriesDecksDiv);
+            insideDiv.append(seriesDiv);
+        })
+
+        if (deckList.length > 0){
+            var decksDiv = document.createElement('div');
+            var decksP = document.createElement('p');
+            decksP.innerHTML = "Other Decks:"
+            decksDiv.appendChild(decksP)
+            deckList.forEach( (deck) => {
+                decksDiv.appendChild(displayDeck(deck));
+            })
+            insideDiv.append(decksDiv);
+        }
+
+        var ownedSingles = keepingcards.filter( card => singleList.includes(card))
+
+        if (ownedSingles.length > 0){
+            var singlesDiv = document.createElement('div');
+            var singlesP = document.createElement('p');
+            singlesP.innerHTML = "Single Cards:"
+            singlesDiv.appendChild(singlesP)
+            ownedSingles.forEach( single => {
+                var img = document.createElement("img");
+                img.src = "cards/" + single + ".gif"
+                img.alt = single
+                img.title = single;
+                img.style = "align-self:center;"
+                
+                singlesDiv.appendChild(img)
+            })
+            insideDiv.append(singlesDiv);
+        }
+
+        var masteries = getMasteries();
+        var allDecks = seriesDecks.concat(deckList)
+        var mastered = masteries.filter( mastery => allDecks.includes(mastery));
+
+        if (mastered.length > 0){
+            var masteryDiv = document.createElement('div');
+            var masteryP = document.createElement('p');
+            masteryP.innerHTML = "Masteries:";
+            masteryDiv.appendChild(masteryP);
+    
+            allDecks.forEach( deck => {
+                if (masteries.includes(deck)){
+                    var img = document.createElement("img");
+                    img.src = "cards/" + deck + "master.gif";
+                    img.alt = deck + "master";
+                    img.title = deck + "master";
+                    masteryDiv.appendChild(img);
+                }
+            })
+            insideDiv.append(masteryDiv);
+        }
+
+        massDeckDiv.appendChild(insideDiv);
+        document.getElementById("massdeckscontainer").appendChild(massDeckDiv);
+    })
+}
+
+function showMassDeck(name){
+    var deckDiv = document.getElementById(name.replaceAll(" ", ''));
+    if (deckDiv.style.display != "none"){
+        deckDiv.style.display = "none";
+    }
+    else{
+        deckDiv.style.display = "flex";
+    }
 }
 
 function filter(){
@@ -1017,6 +1137,7 @@ function setWebsiteHeader(){
                 <a href="neededcards.html" class="navbutton">needed</a>
                 <a href="futurecards.html" class="navbutton">future</a>
                 <a href="keepingcards.html" class="navbutton">keeping</a>
+                <a href="massdecks.html" class="navbutton">mass decks</a>
                 <a href="tradingcards.html" class="navbutton">trading</a>
                 <a href="log.html" class="navbutton">logs</a>
             </div>

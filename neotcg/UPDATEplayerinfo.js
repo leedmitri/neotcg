@@ -38,6 +38,36 @@ var singlecards = "orange01, tune01"; // "card01, card02, card03..."
 var allfuturedecks = "vest"; // "deckone, decktwo, deckthree..."
 
 
+/*
+    MASS DECKS
+    povide a list of collections containing series(s), deck(s), and/or single card(s)
+    these cards need to still be defined in allisodecks/single cards to stay in keeping
+    you define the mass deck name, and then different media series, decks, and single cards you
+    want to include. if you don't have any input, leave the array ([]) blank.
+    place mass deck images in the massdecks folder
+
+    ex:
+    [
+        {
+            massDeckName: 'Green Girls',
+            seriesList: ["Snot Girl Comics", "BatGirl Comics"],
+            deckList: ["green", "girl"],
+            singleList: ["colors07"]
+        },
+
+        {
+            massDeckName: "Urusei Yatsura",
+            seriesList: ["Urusei Yatsura"],
+            deckList: [],
+            singleList: []
+        }
+    ]
+*/
+var massdecks = 
+[
+    
+]
+
 /* 
     COUPONS:
     list the path to the coupon image, total uses it has, and how many uses it has left
