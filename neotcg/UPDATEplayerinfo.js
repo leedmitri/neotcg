@@ -11,12 +11,17 @@ var pendingtrades = [];
 /*
    HIGH PRIORITY DECKS:
    provide a list of decks that you are most seeking
+   these decks must be defined within allisoseries or allisodecks to sort into keeping
    a placeholder card will be used if you do not have the deck's card00
    put the deck name, not card numbers (ie sakura, not sakura01)
    
-   all ISO DECKS:
-   all decks that you would like to be collecting INCLUDING high priority decks. 
-   these will be displayed by just a link to the deck page.
+   ALL ISO SERIES:
+   all series decks that you would like to be collecting
+   series must be exactly as written on colors-tcg.eu
+
+   ALL ISO DECKS:
+   all decks that you would like to be collecting
+   you do not need to include decks already defined within an allisoseries
    put the deck name, not card numbers (ie sakura, not sakura01)
    
    SPECIFIC CARDS:
@@ -32,40 +37,57 @@ var pendingtrades = [];
    
    ex: "deckone, decktwo, deckthree" or "card01, card02, card03"
 */
-var highprioritydecks = "clamp, earring, elegance, honorific, jingling, labcoat"; // "deckone, decktwo, deckthree..."
-var allisodecks = "clamp, earring, elegance, honorific, jingling, labcoat"; // "deckone, decktwo, deckthree..."
-var singlecards = "orange01, tune01"; // "card01, card02, card03..."
-var allfuturedecks = "vest"; // "deckone, decktwo, deckthree..."
+var highprioritydecks = "clamp, earring, elegance"; // "deckone, decktwo, deckthree..."
+var allisoseries = ["Colors Universe"] // ["Series Name 1", "Series Name 2", ...]
+var allisodecks = "halloween, christmas"; // "deckone, decktwo, deckthree..."
+var singlecards = "brothers01"; // "card01, card02, card03..."
+var allfuturedecks = "artists"; // "deckone, decktwo, deckthree..."
 
 
 /*
     MASS DECKS
     povide a list of collections containing series(s), deck(s), and/or single card(s)
-    these cards need to still be defined in allisodecks/single cards to stay in keeping
     you define the mass deck name, and then different media series, decks, and single cards you
-    want to include. if you don't have any input, leave the array ([]) blank.
-    place mass deck images in the massdecks folder
+    want to include. if you don't have any input, leave the array ([]) or string ("") blank.
+    place mass deck images in the massdecks folder with the name you have written
 
     ex:
     [
         {
-            massDeckName: 'Green Girls',
-            seriesList: ["Snot Girl Comics", "BatGirl Comics"],
-            deckList: ["green", "girl"],
-            singleList: ["colors07"]
+            name: 'Disney',
+            image: 'disney.png',
+            series: ["Kingdom Hearts", "Kingdom Come"],
+            decks: "onceupon, my beloved",
+            singles: "adaptations08, season06"
         },
 
         {
-            massDeckName: "Urusei Yatsura",
-            seriesList: ["Urusei Yatsura"],
-            deckList: [],
-            singleList: []
+            name: 'Mass Deck 2',
+            image: 'massdeck2.png',
+            series: ["Series Name", "Other Series Name"],
+            decks: "deck, otherdeck",
+            singles: "card01, othercard02"
+        },
+
+        {
+            name: 'Mass Deck 3',
+            image: 'massdeck3.png',
+            series: [],
+            decks: "deck, otherdeck",
+            singles: ""
         }
     ]
 */
 var massdecks = 
 [
-    
+    {
+        name: 'Colors Universe',
+        image: 'colorsuniversemassdeck.jpg',
+        seriesnames: ["Colors Universe"],
+        decks: "",
+        singles: ""
+    },
+        
 ]
 
 /* 

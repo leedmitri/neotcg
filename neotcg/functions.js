@@ -494,38 +494,55 @@ function fillTradingCardsTextPage(){
     document.getElementById("duplicatestextarea").value = duplicates.join(", ")
 }
 
+function getSeriesDecks(series){
+    return Object.keys(Object.fromEntries(Object.entries(deckDictionary).filter(([k,v]) => v[0] == series)));
+}
+
 function fillMassDecksPage(){
 
     massdecks.forEach( (massDeck) => {
 
-        var seriesDecks = [];
-        // get all series' decks
-        var {massDeckName, massDeckImgName, seriesList, deckList, singleList} = massDeck;
+        var {name, image, seriesnames, decks, singles} = massDeck;
+        if (decks.trim() == ""){
+            decks = [];
+        }
+        else{
+            decks = decks.trim().split(",");
+        }
+        if (singles.trim() == ""){
+            singles = [];
+        }
+        else{
+            singles = singles.trim().split(",");
+        }
+
         var massDeckDiv = document.createElement('div');
         massDeckDiv.style = "display: flex; justify-content: center; flex-direction: column;";
 
         var massDeckImg = document.createElement("img")
-        massDeckImg.setAttribute("src", "massdecks/" + massDeckImgName)
-        massDeckImg.onclick = function(){showMassDeck(massDeckName)};
-        massDeckImg.style="align-self: center;"
+        massDeckImg.setAttribute("src", "massdecks/" + image)
+        massDeckImg.onclick = function(){showMassDeck(name)};
+        massDeckImg.style="align-self: center; max-height: 250px; max-width: 250px"
         massDeckDiv.appendChild(massDeckImg)
         
         var massDeckP = document.createElement('p');
-        massDeckP.innerHTML = massDeckName;
+        massDeckP.innerHTML = name;
         massDeckDiv.appendChild(massDeckP)
 
         var insideDiv = document.createElement('div');
-        insideDiv.id = massDeckName.replaceAll(" ", '');
+        insideDiv.id = name.replaceAll(" ", '');
         insideDiv.style="display:none; justify-content: center; flex-direction:column;";
 
-        seriesList.forEach( (series) => {
+        var seriesDecks = [];
+
+        seriesnames.forEach( (seriesname) => {
             var seriesDiv = document.createElement('div');
             var seriesP = document.createElement('p');
-            seriesP.innerHTML = "Series: " + series;
+            seriesP.innerHTML = "Series: " + seriesname;
             seriesDiv.appendChild(seriesP)
 
             var seriesDecksDiv = document.createElement('div');
-            seriesDecks = Object.keys(Object.fromEntries(Object.entries(deckDictionary).filter(([k,v]) => v[0] == series)));
+            var seriesDecks = getSeriesDecks(seriesname);
             seriesDecks.sort();
             seriesDecks.forEach( deck => {
                 seriesDecksDiv.appendChild(displayDeck(deck));
@@ -535,18 +552,19 @@ function fillMassDecksPage(){
             insideDiv.append(seriesDiv);
         })
 
-        if (deckList.length > 0){
+        if (decks.length > 0){
             var decksDiv = document.createElement('div');
             var decksP = document.createElement('p');
             decksP.innerHTML = "Other Decks:"
             decksDiv.appendChild(decksP)
-            deckList.forEach( (deck) => {
+            decks.forEach( (deck) => {
+                deck = deck.trim();
                 decksDiv.appendChild(displayDeck(deck));
             })
             insideDiv.append(decksDiv);
         }
 
-        var ownedSingles = keepingcards.filter( card => singleList.includes(card))
+        var ownedSingles = keepingcards.filter( card => singles.includes(card.trim()))
 
         if (ownedSingles.length > 0){
             var singlesDiv = document.createElement('div');
@@ -566,7 +584,7 @@ function fillMassDecksPage(){
         }
 
         var masteries = getMasteries();
-        var allDecks = seriesDecks.concat(deckList)
+        var allDecks = seriesDecks.concat(decks)
         var mastered = masteries.filter( mastery => allDecks.includes(mastery));
 
         if (mastered.length > 0){
@@ -1008,7 +1026,9 @@ function readLogs(){
             // ignore candies
             else if (!tradeItem.endsWith(" candy") && !tradeItem.endsWith(" candies") && tradeItem != ''){
                 var deck = tradeItem.substring(0, tradeItem.length - 2);
-                if (highprioritydecks.includes(deck) || allisodecks.includes(deck)){
+                //get tradeItem series
+                var series = getColorSeries(deck)[0];
+                if (highprioritydecks.includes(deck) || allisodecks.includes(deck) || (series && allisoseries.includes(series))){
                     keepingcards.unshift(tradeItem);
                     //count cards in keeping deck
                     if (deck in completedDeckCounts){
@@ -1180,6 +1200,11 @@ function showPortfolio(type){
 
 function sortNeededDecks(){
     var neededDecks = allisodecks;
+    allisoseries.forEach(seriesname => {
+        var seriesDecks = getSeriesDecks(seriesname);
+        neededDecks = neededDecks.concat(seriesDecks);
+    })
+    neededDecks.sort();
     
     var redDiv = document.createElement("div");
     var orangeDiv = document.createElement("div");

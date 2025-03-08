@@ -17,12 +17,13 @@ Please make sure to not overwrite your files by pulling from the github, especia
      - Text form
 - Levels
 - Masteries
-- All ISO decks displayed color coded with links to their Colors TCG deck page.
+- All ISO decks or series displayed color coded with links to their Colors TCG deck page.
 - Needed cards based on ISO decks decks
 - Priority decks displayed in grid format with cards you own and placeholders
 - Pending trades
+- Mass Deck Organization
 
-An example setup can be seen [here](https://gloomlee.neocities.org/colorstcg/neotcgexample/).
+An OUT-OF-DATE example setup can be seen [here](https://gloomlee.neocities.org/colorstcg/neotcgexample/).
 
 # How to Use
 The js files beginning with "UPDATE" are the files that a user needs to update and change as they play Colors TCG. These files control all of the pages, and must stay in their given format.
@@ -94,7 +95,11 @@ var pendingtrades = ["PLAYERNAME1: card01, card02", "PLAYERNAME2: card03, card04
  a placeholder card will be used to represent the cards you do not own from the deck (emptycard.png)
  *put the deck name, not card numbers (ie sakura, not sakura01)*
 
- **all ISO DECKS**  
+**ALL ISO SERIES:**
+all series decks that you would like to be collecting
+series must be exactly as written on colors-tcg.eu
+
+ **ALL ISO DECKS**  
  all decks that you would like to be collecting INCLUDING high priority decks. 
  these will be displayed by just a link to the deck page.
  *put the deck name, not card numbers (ie sakura, not sakura01)*
