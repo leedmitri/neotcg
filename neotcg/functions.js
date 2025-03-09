@@ -1028,29 +1028,35 @@ function readLogs(){
             }
             // ignore candies
             else if (!tradeItem.endsWith(" candy") && !tradeItem.endsWith(" candies") && tradeItem != ''){
-                var deck = tradeItem.substring(0, tradeItem.length - 2);
-                //get tradeItem series
-                var series = getColorSeries(deck)[0];
-                if (highprioritydecks.includes(deck) || allisodecks.includes(deck) || (series && allisoseries.includes(series))){
-                    keepingcards.unshift(tradeItem);
-                    //count cards in keeping deck
-                    if (deck in completedDeckCounts){
-                        completedDeckCounts[deck]++;
-                        //check if deck completed - remove from collecting isos
-                        if (completedDeckCounts[deck] >= 20){
-                            allisodecks = allisodecks.filter(element => element !== deck);
-                            delete completedDeckCounts[deck];
+                if (!keepingcards.includes(tradeItem) && (!futurecards.includes(tradeItem))){
+            
+                    var deck = tradeItem.substring(0, tradeItem.length - 2);
+                    //get tradeItem series
+                    var series = getColorSeries(deck)[0];
+                    if (highprioritydecks.includes(deck) || allisodecks.includes(deck) || (series && allisoseries.includes(series))){
+                        keepingcards.unshift(tradeItem);
+                        //count cards in keeping deck
+                        if (deck in completedDeckCounts){
+                            completedDeckCounts[deck]++;
+                            //check if deck completed - remove from collecting isos
+                            if (completedDeckCounts[deck] >= 20){
+                                allisodecks = allisodecks.filter(element => element !== deck);
+                                delete completedDeckCounts[deck];
+                            }
+                        }else{
+                            completedDeckCounts[deck] = 1;
                         }
-                    }else{
-                        completedDeckCounts[deck] = 1;
                     }
-                }
-                else if (singlecards.includes(tradeItem)){
-                    keepingcards.unshift(tradeItem);
-                    singlecards = singlecards.filter(element => element != tradeItem);
-                }
-                else if (allfuturedecks.includes(deck)){
-                    futurecards.unshift(tradeItem);
+                    else if (singlecards.includes(tradeItem)){
+                        keepingcards.unshift(tradeItem);
+                        singlecards = singlecards.filter(element => element != tradeItem);
+                    }
+                    else if (allfuturedecks.includes(deck)){
+                        futurecards.unshift(tradeItem);
+                    }
+                    else{
+                        tradingcards.unshift(tradeItem);
+                    }
                 }
                 else{
                     tradingcards.unshift(tradeItem);
