@@ -1017,6 +1017,9 @@ function readLogs(){
                     case "gray": 
                         crayons["gray"] += numCrayons;
                         break;
+                    case "grey": 
+                        crayons["gray"] += numCrayons;
+                        break;
                 }
             }
             //signatures
@@ -1087,6 +1090,9 @@ function readLogs(){
                         crayons["brown"] -= numCrayons;
                         break;
                     case "gray": 
+                        crayons["gray"] -= numCrayons;
+                        break;
+                    case "grey": 
                         crayons["gray"] -= numCrayons;
                         break;
                 }
