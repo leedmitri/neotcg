@@ -441,7 +441,7 @@ function fillSignatures(){
 }
 
 function getMasteries(){
-    var keepingDeckDictionary = getDeckNames(keepingcards);
+    var keepingDeckDictionary = getDeckNames();
     var masteries = [];
     if (Object.keys(keepingDeckDictionary).length != 0){
         Object.keys(keepingDeckDictionary).forEach( keepingDeck => {
@@ -449,7 +449,7 @@ function getMasteries(){
             var cardsOwnedFromDeck = keepingDeckDictionary[keepingDeck];
             cardsOwnedFromDeck = cardsOwnedFromDeck.filter( (card, index) => cardsOwnedFromDeck.indexOf(card) == index )
             if (cardsOwnedFromDeck.length >= 20){
-                masteries.push(keepingDeck)
+                masteries.push(keepingDeck.trim())
             }
         })
     }
@@ -457,7 +457,6 @@ function getMasteries(){
 }
 
 function fillMasteries(){
-    var keepingArray = getKeepingCards();
     var masteries = getMasteries();
     if (masteries.length != 0){
         document.getElementById("masteriescontainer").innerHTML = ""
@@ -499,6 +498,7 @@ function getSeriesDecks(series){
 }
 
 function fillMassDecksPage(){
+    var masteries = getMasteries();
 
     massdecks.forEach( (massDeck) => {
 
@@ -507,13 +507,13 @@ function fillMassDecksPage(){
             decks = [];
         }
         else{
-            decks = decks.trim().split(",");
+            decks = decks.replaceAll(' ', '').split(",");
         }
         if (singles.trim() == ""){
             singles = [];
         }
         else{
-            singles = singles.trim().split(",");
+            singles = singles.replaceAll(' ', '').split(",");
         }
 
         var massDeckDiv = document.createElement('div');
@@ -533,7 +533,7 @@ function fillMassDecksPage(){
         insideDiv.id = name.replaceAll(" ", '');
         insideDiv.style="display:none; justify-content: center; flex-direction:column;";
 
-        var seriesDecks = [];
+        var allSeriesDecks = [];
 
         seriesnames.forEach( (seriesname) => {
             var seriesDiv = document.createElement('div');
@@ -543,6 +543,7 @@ function fillMassDecksPage(){
 
             var seriesDecksDiv = document.createElement('div');
             var seriesDecks = getSeriesDecks(seriesname);
+            allSeriesDecks = allSeriesDecks.concat(seriesDecks)
             seriesDecks.sort();
             seriesDecks.forEach( deck => {
                 seriesDecksDiv.appendChild(displayDeck(deck));
@@ -583,8 +584,7 @@ function fillMassDecksPage(){
             insideDiv.append(singlesDiv);
         }
 
-        var masteries = getMasteries();
-        var allDecks = seriesDecks.concat(decks)
+        var allDecks = allSeriesDecks.concat(decks)
         var mastered = masteries.filter( mastery => allDecks.includes(mastery));
 
         if (mastered.length > 0){
@@ -729,10 +729,12 @@ function getColorSeries(deckName){
     return ["SERIESNOTFOUND", "CHARACTERNAMENOTFOUND", 'COLORNOTFOUND'];
 }
 
-function getDeckNames(keepingArray){
+function getDeckNames(){
     var key = '';
     var value = [];
     var decks = {};
+
+    var keepingArray = getKeepingCards();
 
     if (keepingArray.length != 0){
         for (let index=0; index < keepingArray.length; index++){
