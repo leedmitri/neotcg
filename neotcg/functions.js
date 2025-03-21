@@ -76,41 +76,50 @@ function cardTextSearch(type){
     var searchInput = document.getElementById("searchbar").value;
     var searchArray = searchInput.replaceAll(" ", '').split(",");
     
-    var searchingCards;
-    if (type == "tradingcards") { searchingCards = getNeededCards()[0] }
-    else { searchingCards = getTradingCards() }
-
-    var result = getNeededCards();
-    collects = result[1];
-    singles = result[2];
-    future = result[3];
-
-    var collectFound = collects.filter(card => {
-        return searchArray.some( input => {
-            if (card.startsWith(input) && input != ''){
-                return true;
-            }
-        })
-    })
-    var singlesFound = singles.filter(card => {
-        return searchArray.some( input => {
-            if (card.startsWith(input) && input != ''){
-                return true;
-            }
-        })
-    })
-    var futureFound = future.filter(card => {
-        return searchArray.some( input => {
-            if (card.startsWith(input) && input != ''){
-                return true;
-            }
-        })
-    })
-
     document.getElementById("searchresultcontainer").innerHTML = '';
-    document.getElementById("searchresultcontainer").innerHTML += "high priority: " + collectFound.length + "<br>" + collectFound.join(", ") + "<br><br>";
-    document.getElementById("searchresultcontainer").innerHTML += "single cards: " + singlesFound.length + "<br>" + singlesFound.join(", ") + "<br><br>";
-    document.getElementById("searchresultcontainer").innerHTML += "future: " + futureFound.length + "<br>" + futureFound.join(", ") + "<br>";
+    if (type == "tradingcards") { 
+        var searchingCards = getTradingCards();
+
+        var found = searchingCards.filter(card => {
+            return searchArray.some( input => {
+                if (card.startsWith(input) && input != ''){
+                    return true;
+                }
+            })
+        })
+        document.getElementById("searchresultcontainer").innerHTML += "found: " + found.length + "<br>" + found.join(", ") + "<br>";
+    }
+    else { 
+        var result = getNeededCards();
+        collects = result[1];
+        singles = result[2];
+        future = result[3];
+
+        var collectFound = collects.filter(card => {
+            return searchArray.some( input => {
+                if (card.startsWith(input) && input != ''){
+                    return true;
+                }
+            })
+        })
+        var singlesFound = singles.filter(card => {
+            return searchArray.some( input => {
+                if (card.startsWith(input) && input != ''){
+                    return true;
+                }
+            })
+        })
+        var futureFound = future.filter(card => {
+            return searchArray.some( input => {
+                if (card.startsWith(input) && input != ''){
+                    return true;
+                }
+            })
+        })
+        document.getElementById("searchresultcontainer").innerHTML += "high priority: " + collectFound.length + "<br>" + collectFound.join(", ") + "<br><br>";
+        document.getElementById("searchresultcontainer").innerHTML += "single cards: " + singlesFound.length + "<br>" + singlesFound.join(", ") + "<br><br>";
+        document.getElementById("searchresultcontainer").innerHTML += "future: " + futureFound.length + "<br>" + futureFound.join(", ") + "<br>";
+    }
 }
 
 function displayDeck(deck){
