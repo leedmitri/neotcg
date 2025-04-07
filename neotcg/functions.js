@@ -144,7 +144,7 @@ function displayDeck(deck){
      deckHeader.appendChild(deckLink)
      deckDiv.appendChild(deckHeader)
 
-     var cardsOwned = getKeepingCards();
+     var cardsOwned = getKeepingCards().concat(getFutureCards());
 
      // make card setup
      for (var index = 1; index < 21; index++){
@@ -574,7 +574,8 @@ function fillMassDecksPage(){
             insideDiv.append(decksDiv);
         }
 
-        var ownedSingles = keepingcards.filter( card => singles.includes(card.trim()))
+        var ownedCards = keepingcards.concat(futurecards);
+        var ownedSingles = keepingcards.filter( card => ownedCards.includes(card.trim()))
 
         if (ownedSingles.length > 0){
             var singlesDiv = document.createElement('div');
@@ -743,7 +744,7 @@ function getDeckNames(){
     var value = [];
     var decks = {};
 
-    var keepingArray = getKeepingCards();
+    var keepingArray = getKeepingCards().concat(getFutureCards());
 
     if (keepingArray.length != 0){
         for (let index=0; index < keepingArray.length; index++){
