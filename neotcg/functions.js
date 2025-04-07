@@ -1228,6 +1228,10 @@ function sortNeededDecks(){
         neededDecks = neededDecks.concat(seriesDecks);
     })
     neededDecks.sort();
+
+    //remove mastered
+    var mastered = getMasteries();
+    neededDecks = neededDecks.filter( (deck) => !mastered.includes(deck));
     
     var redDiv = document.createElement("div");
     var orangeDiv = document.createElement("div");
