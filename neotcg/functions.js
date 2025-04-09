@@ -575,7 +575,7 @@ function fillMassDecksPage(){
         }
 
         var ownedCards = keepingcards.concat(futurecards);
-        var ownedSingles = keepingcards.filter( card => ownedCards.includes(card.trim()))
+        var ownedSingles = singles.filter( card => ownedCards.includes(card.trim()))
 
         if (ownedSingles.length > 0){
             var singlesDiv = document.createElement('div');
@@ -793,8 +793,15 @@ function getNeededCards(){
 
 function generateNeededCards(){
 
+    var neededDecks = allisodecks;
+    allisoseries.forEach(seriesname => {
+        var seriesDecks = getSeriesDecks(seriesname);
+        neededDecks = neededDecks.concat(seriesDecks);
+    })
+    neededDecks.sort();
+
     //find deck needed cards
-    allisodecks.forEach( deckName => {
+    neededDecks.forEach( deckName => {
         for (var index = 1; index < 21; index++){
             var cardNumber = ''
             if (index < 10){ cardNumber = "0"+index}
