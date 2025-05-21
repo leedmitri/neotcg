@@ -316,7 +316,7 @@ function fillTotalCards(){
     var totalcards = getKeepingCards().length + getTradingCards().length + getFutureCards().length + signatures.length;
     var levelString = "";
     if (totalcards > 14401){
-        var modifier = Math.floor((totalCards % 14401) / 3) ;
+        var modifier = Math.floor((totalcards % 14401) / 3) ;
         levelString += "rainbow " + modifier + " (" + totalcards + " cards)";
     }
     else if (totalcards > 14101){ levelString += "himalayan (" + totalcards + " cards)"; }
@@ -356,7 +356,7 @@ function fillTotalCards(){
     else if (totalcards > 5101){ levelString += "tiger lily (" + totalcards + " cards)"; }
     else if (totalcards > 4801){ levelString += "sakura (" + totalcards + " cards)"; }
 
-    else if (totalcards > 5401){ levelString += "silver (" + totalcards + " cards)"; }
+    else if (totalcards > 4501){ levelString += "silver (" + totalcards + " cards)"; }
     else if (totalcards > 4201){ levelString += "bronze (" + totalcards + " cards)"; }
     else if (totalcards > 3901){ levelString += "amethyst (" + totalcards + " cards)"; }
     else if (totalcards > 3601){ levelString += "sapphire (" + totalcards + " cards)"; }
