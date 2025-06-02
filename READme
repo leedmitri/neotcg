@@ -1,0 +1,61 @@
+
+LEVELS
+Total Number of Cards Text
+<span class="neotcg" data-name="cardcount"></span>
+
+Level Text
+<span class="neotcg" data-name="leveltext"></span>
+
+CURRENT Level Image
+<span class="neotcg" data-name="levelimage"></span>
+
+
+
+SERVICES
+Current Sketchpad Image
+<span class="neotcg" data-name="currentsketchpadimage"></span>
+
+Completed Sketchpad Image (With Count)
+<span class="neotcg" data-name="completedsketchpadimage"></span>
+
+Palette Image
+<span class="neotcg" data-name="paletteportfolioimage"></span>
+
+Palette Decks
+<span class="neotcg" data-name="paletteportfoliodecks"></span>
+
+Monochrome Image
+<span class="neotcg" data-name="monochromeportfolioimage"></span>
+
+Monochrome Decks
+<span class="neotcg" data-name="monochromeportfoliodecks"></span>
+
+
+CURRENCIES
+Crayons (With Counts)
+<span class="neotcg" data-name="crayons"></span>
+
+
+
+NEEDED CARDS
+Needed Cards Text (Text List)
+<span class="neotcg" data-name="neededcardstext"></span>
+
+
+
+CARD DISPLAYS BY SECTION
+Signatures
+<span class="neotcg" data-name="signatures"></span>
+
+Masteries
+<span class="neotcg" data-name="masteries"></span>
+
+Single Cards (Collecting)
+
+
+CARD DISPLAYS MANUALLY SET
+Display Deck In Grid (With Colored Link Header, and Owned Cards Filled)
+<span class="neotcg" data-name="deckgridowned" data-input="[DECKNAME]"></span>
+
+Display Mastered Deck In Grid (With Mastery Image, Colored Link Header, and Owned Cards Filled)
+<span class="neotcg" data-name="deckgridownedwmastery" data-input="[DECKNAME]"></span>

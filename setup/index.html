@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=100%, initial-scale=.4">
+        <title>Home</title>
+        <link href="style.css" rel="stylesheet" type="text/css" media="all">
+        <script type="module" src="neotcg/neotcg.js"></script>
+    </head>
+    <body>
+
+        <div id="main">
+
+            <div class="flex spaceevenly">
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/" target="_blank">ColorsTCG</a>
+                <a class="sectionlink" href="https://colors-trade.dreamwidth.org/" target="_blank">ColorsTrade</a>
+                <a class="sectionlink" href="http://colors-tcg.eu/recycledart.php" target="_blank">Recycled Art</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%2Aart+studio" target="_blank">Art Studio</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%2Aart+shop" target="_blank">Art Shop</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%21activity+rewards" target="_blank">Activity Rewards</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%2Aportfolios" target="_blank">Portfolios</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%21masteries" target="_blank">Masteries</a>
+                <a class="sectionlink" href="https://colors-tcg.dreamwidth.org/tag/%21levels" target="_blank">Levels</a>
+                <a class="sectionlink" href="http://colors-tcg.eu/cards.php?view=alpha" target="_blank">Decks List</a>
+                <a class="sectionlink" href="http://colors-tcg.eu/members.php" target="_blank">Member List</a>
+            </div>
+            
+            <hr>
+            <div class="flex spaceevenly">
+                <div class="flex center section">
+                    <div>
+                        <span class="neotcg" data-name="levelimage"></span>
+                    </div>
+                    <div>
+                        <p>
+                            Player Name: [UPDATE]
+                            <br>
+                            Level: 
+                                <span class="neotcg" data-name="leveltext"></span>
+                                (<span class="neotcg" data-name="cardcount"></span>)
+                            <br>
+                            <a class="sectionlink" href="" target="_blank">Trade Post [UPDATE]</a>
+                            <br>
+                            <a class="sectionlink" href="" target="_blank">Trade Tag [UPDATE]</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex center">
+                    <div>
+                        <p><b>current</b></p>
+                        <span class="neotcg" data-name="currentsketchpadimage"></span>
+                    </div>
+                    <div>
+                        <p><b>completed</b></p>
+                        <span class="neotcg" data-name="completedsketchpadimage"></span>
+                    </div>
+                </div>
+                <div class="flex center section">
+                    <div class="flex fcol">
+                        <span class="neotcg" data-name="paletteportfolioimage"></span>
+                        <span class="neotcg" data-name="paletteportfoliochecklist"></span>
+                    </div>
+                    <div class="flex fcol">
+                        <span class="neotcg" data-name="monochromeportfolioimage"></span>
+                        <div>
+                            <button class="portfoliobutton" onclick = "showPortfolio('monochrome')" type="button"><b>Monochrome ▾</b></button>
+                            <div id="monochromehidden" class="portfoliohidden">
+                                <span class="neotcg" data-name=""></span>
+                            </div> 
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+            <div class="flex center">
+                <span class="neotcg" data-name="crayons"></span>
+            </div>
+            
+            <hr>
+
+            <p>Signatures</p>
+            <span class="neotcg" data-name="signatures"></span>
+
+            <hr>
+
+            <p>Masteries</p>
+            <span class="neotcg" data-name="masteries"></span>
+
+        </div>
+
+    </body>
+</html>
