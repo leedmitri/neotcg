@@ -1173,7 +1173,7 @@ function searchShowing(){
 function setCredits(){
     document.getElementById("creditscontainer").innerHTML = 
         `
-        <p><a href="https://github.com/leedmitri/neotcg">neotcg</a> by <a href="https://gloomlee.neocities.org/">gloomlee</a></p>
+        <p><a href="https://github.com/leedmitri/neotcg">neotcg</a> by <a href="https://earthslee.neocities.org/">earthslee</a></p>
         `;
 }
 
