@@ -254,7 +254,7 @@ function fillTotalCards(){
     var totalcards = getKeepingCards().length + getTradingCards().length + getFutureCards().length;
     var levelString = "";
     if (totalcards > 14401){
-        var modifier = Math.floor((totalCards % 14401) / 3) ;
+        var modifier = Math.floor((totalcards % 14401) / 3) ;
         levelString += "rainbow " + modifier + " (" + totalcards + " cards)";
     }
     else if (totalcards > 14101){ levelString += "himalayan (" + totalcards + " cards)"; }
