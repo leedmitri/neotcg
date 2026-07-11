@@ -1,0 +1,178 @@
+:root{
+    
+    /* general website colors */
+    --maincolor: beige;
+    --accentcolor: rgb(186, 199, 150);
+    --linkcolor: black;
+    
+    /* collecting page header/deck colors */
+    --red: #ffdbdb;
+    --orange: #ffeee2;
+    --yellow: #fcfade;
+    --green: #e2fce6;
+    --blue: #dff2fd;
+    --purple: #e3e3ff;
+    --brown: #e9d4b7;
+    --gray: #d4d4d4;
+    --special: white;
+}
+body{
+    background-color: var(--accentcolor);
+}
+p{
+    color: var(--textcolor);
+    margin: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 0px;
+}
+a{
+    color: var(--linkcolor);
+}
+hr{
+    border: 1px solid #658354; 
+    margin-top:10px;
+}
+img{
+    margin: 5px;
+}
+
+.flex{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.fcol{
+    flex-direction: column;
+}
+.center{
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.spaceevenly{
+    justify-content: space-evenly;
+}
+.tleft{
+    text-align: left;
+}
+
+#header, #footer{
+    margin-bottom: 10px;
+    text-align: center;
+}
+#main{
+    margin: auto;
+    min-height: 500px;
+    width: 900px;
+    padding: 15px;
+    background-color: var(--maincolor);
+}
+#navbar{
+    display:flex; 
+    position: relative;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+}
+#navbar > a{
+    color: black;
+    background-color: var(--navbuttoncolor);
+    text-decoration: none;
+    padding: 7px;
+}
+#navbar > a:hover{
+    position: relative;
+    width: auto;
+    font-size: 20px;
+}
+
+
+span[data-name="crayons"]{
+    display:flex; 
+    width: 200px; 
+    justify-content: space-evenly;
+}
+span[data-name="crayons"] > div{
+    display: flex; 
+    flex-direction: column; 
+    text-align: center; 
+    margin-right: 5px;
+}
+
+
+/* COLLECTING PAGE */
+.deckred{
+    background-color: var(--red);
+}
+.deckorange{
+    background-color: var(--orange);
+}
+.deckyellow{
+    background-color: var(--yellow);
+}
+.deckgreen{
+    background-color: var(--green);
+}
+.deckblue{
+    background-color: var(--blue);
+}
+.deckpurple{
+    background-color: var(--purple);
+}
+.deckbrown{
+    background-color: var(--brown);
+}
+.deckgray{
+    background-color: var(--gray);
+}
+.deckspecial{
+    background-color: var(--special);
+}
+.deckCOLORNOTFOUND{
+    background-color: none;
+}
+
+.carddiv{
+    width: max-content;
+    height: max-content;
+    display: inline;
+}
+.deckdiv{
+    display:inline-block;
+    margin:5px;
+}
+.deckwmasterdiv{
+    display: inline-block;
+}
+.deckdiv img{
+    margin: 0px;
+}
+.deckimgdiv{
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    width: 275px;
+}
+.deckheader{
+    text-align: center;
+    font-size: 15px; 
+    margin: 0px; 
+    padding: 5px;
+}
+.decklink{
+    text-align: center;
+    font-size: 15px; 
+    margin: 0px;
+}
+.neededdeckcolumns{
+    display: flex;
+    gap: 5px;
+    margin: 10px;
+}
+.neededdeckcolumns > div{
+    display:flex; 
+    flex-direction: column; 
+    text-align: center;
+    padding: 10px;
+}
