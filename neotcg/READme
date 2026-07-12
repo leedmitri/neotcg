@@ -1,13 +1,18 @@
 
-LEVELS
+INFORMATIONAL
 Total Number of Cards Text
 <span class="neotcg" data-name="cardcount"></span>
 
 Level Text
 <span class="neotcg" data-name="leveltext"></span>
 
-CURRENT Level Image
+Current Level Image
 <span class="neotcg" data-name="levelimage"></span>
+
+Logs
+<span class="neotcg" data-name="logs"></span>
+
+Missing Images
 
 
 
@@ -35,22 +40,32 @@ CURRENCIES
 Crayons (With Counts)
 <span class="neotcg" data-name="crayons"></span>
 
+Candies
 
 
 NEEDED CARDS
-Needed Cards Text (Text List)
+All Needed Cards Text (Text List)
 <span class="neotcg" data-name="neededcardstext"></span>
+<span class="neotcg" data-name="neededcardstextarea"></span>
 
+All Individually Needed Cards (Text Lists)
+<span class="neotcg" data-name="neededsinglecardstext"></span>
+<span class="neotcg" data-name="neededsinglecardstextarea"></span>
+
+All Needed Decks
+<span class="neotcg" data-name="neededdeckscoloreddivs"></span>
+<span class="neotcg" data-name="neededdeckstextarea"></span>
 
 
 CARD DISPLAYS BY SECTION
+Pile (Last 100 New via Images)
+<span class="neotcg" data-name="pilecardsnew"></span>
+
 Signatures
 <span class="neotcg" data-name="signatures"></span>
 
 Masteries
 <span class="neotcg" data-name="masteries"></span>
-
-Single Cards (Collecting)
 
 
 CARD DISPLAYS MANUALLY SET

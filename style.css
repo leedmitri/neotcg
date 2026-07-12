@@ -56,6 +56,9 @@ img{
 .tleft{
     text-align: left;
 }
+.preline{
+    white-space: pre-line;
+}
 
 #header, #footer{
     margin-bottom: 10px;

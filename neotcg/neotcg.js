@@ -1,6 +1,7 @@
 import * as ArchiveInput from './UPDATE_archive.js';
-import * as CollectionInput from '../UPDATE_collection.js';
-import * as LogInput from '../UPDATE_logs.js';
+import * as CollectionInput from './UPDATE_collection.js';
+import * as LogInput from './UPDATE_logs.js';
+import { deckDictionary } from './UPDATE_colorstcgdeckdata.js';
 import { ComponentLib } from './components.js';
 
 var componentsLoc = 'neotcg/components';
@@ -9,28 +10,13 @@ var collection =
 {
     piles: {
         all: [],
-        collecting: strToArray(ArchiveInput.collectingCards),
-        future: strToArray(ArchiveInput.futureCards),
-        trading: strToArray(ArchiveInput.tradingCards),
+        trading: [],
+        keeping: [],
+        bypile: {},
+        piledefs: CollectionInput.piles
     },
-    crayons: ArchiveInput.crayons,
 
-    collecting: {
-        series: CollectionInput.collecting.series,
-        decks: strToArray(CollectionInput.collecting.decks),
-        singles: strToArray(CollectionInput.collecting. singles),
-    },
-    future: {
-        series: CollectionInput.future.series,
-        decks: strToArray(CollectionInput.future.decks),
-        singles: strToArray(CollectionInput.future.singles),
-    },
-    hoard: {
-        series: CollectionInput.hoard.series,
-        decks: strToArray(CollectionInput.hoard.decks),
-        singles: strToArray(CollectionInput.hoard.singles),
-    },
-    massdecks: CollectionInput.massdecks,
+    crayons: ArchiveInput.crayons,
 
     sketchpadname: CollectionInput.sketchpadname,
     sketchpadPoints: ArchiveInput.sketchpadPoints,
@@ -41,6 +27,8 @@ var collection =
     paletteportfoliodecks: strToArray(CollectionInput.paletteportfoliodecks),
     monochromeportfolioname: CollectionInput.monochromeportfolioname,
     monochromeportfoliodecks: strToArray(CollectionInput.monochromeportfoliodecks),
+
+    logs: LogInput.logs + "\n" + ArchiveInput.logs,
 
     errors: [],
 }
@@ -87,28 +75,27 @@ window.onload = () => {
 
     })
 
+    document.querySelector('#toolscraperprocess')?.addEventListener('click', () => {
+        scrapeColorsTCGData();
+    });
+
+    document.querySelector('#toolresetoutput')?.addEventListener('click', () => {
+        resetToolOutput();
+    });
+
 }
 
 function setup(){
-    //setup massdecks
-    collection.massdecks = collection.massdecks.map( massdeck => {
-        //fix vars
-        massdeck.decks = strToArray(massdeck.decks);
-        massdeck.singles = strToArray(massdeck.singles);
 
-        return massdeck;
+    // fix input piles
+    collection.piles.piledefs.forEach( piledef => {
+        piledef.cards = strToArray(piledef.cards);
+        piledef.decks = strToArray(piledef.decks);
     })
 
     readLogs();
     sortPiles();
 
-    //combine piles
-    var piles = [collection.piles.collecting, collection.piles.future, collection.piles.trading];
-    piles.forEach(pile => {
-        if (pile.length > 0){
-            collection.piles.all = collection.piles.all.concat(pile)
-        }
-    })
 }
 
 //functions
@@ -186,23 +173,38 @@ function getCardDeckName(card){
     return card.substring(0, card.length - 2);
 }
 
+function getDeckSeriesName(deck){
+    return deckDictionary[deck].series;
+}
+
 function getKeepingCards(){
-    return (collection.piles.collecting).concat(collection.piles.future);
+}
+
+function getLogs(){
+    return collection.logs;
 }
 
 function isNeeded(card){
     var deck = getCardDeckName(card);
+    var series = getDeckSeriesName(deck);
 
-    var isHoard = collection.hoard.decks.includes(deck) || collection.hoard.singles.includes(card);
-    var isCollect = (collection.collecting.decks.includes(deck) || collection.collecting.singles.includes(card)) && !collection.piles.collecting.includes(card);
+    var piles = collection.piles.piledefs.filter( pile => {
+        if (pile.series.includes(series) || pile.decks.includes(deck) || pile.cards.includes(card)){
+            return true;
+        }
+        return false;
+    })
 
-    if (isHoard || isCollect){
-        return [true, 'collecting'];
+    if (piles.length > 0){
+        var pileNames = piles.map( pile => pile.name)
+
+        if (!collection.piles.all.includes(card)){
+            return [true, pileNames]
+        }
+        return [false, pileNames]
     }
-    else if (CollectionInput.future.decks.includes(deck)){
-        return [true, 'future'];
-    }
-    return [false, 'trading'];
+    return [false, ['trading']]
+
 }
 
 function readLogs(){
@@ -266,19 +268,79 @@ function readLogs(){
     collection.sketchpadPoints = collection.sketchpadPoints % 20
 }
 
+function resetToolOutput(){
+    document.getElementById('tooloutput').innerHTML = '';
+}
+
+async function scrapeColorsTCGData(){
+            var data = await document.getElementById("htmlinput").files[0].text();
+            var converter = document.createElement('div');
+            converter.innerHTML = data;
+            
+            // grab data row
+            var colorsTable = converter.querySelector("#colors")
+            var dataRows = colorsTable.getElementsByTagName("tr");
+            
+            //create dictionary
+            var newDeckDictionary = {};
+            for (var index = 1; index < dataRows.length; index++){ // remove color series etc table header
+                var dataRow = dataRows[index]
+                var dataCells = dataRow.getElementsByTagName("td");
+                var seriesName = dataCells[0].innerText;
+                var characterName = dataCells[1].innerText;
+                var deckName = dataCells[2].innerText.toLowerCase().replaceAll(" ", '').replace(/[àáâãäå]/g,"a")
+                                                                                        .replace(/[èéêë]/g,"e")
+                                                                                        .replace(/[ìíîï]/g,"i")
+                                                                                        .replace(/[òóôöõ]/g,"o")
+                                                                                        .replace(/[ùúûü]/g,"u")
+                                                                                        .replace(/[ýÿ]/g,"u")
+                                                                                        .replace(/[ç]/g,"c")
+                                                                                        .replace(/[ñ]/g,"n")
+                                                                                        .replace(/[^a-z0-9-]/g,'');
+                var color = dataCells[3].innerText;
+                // add to dictionary deckname: [seriesname, color, charactername]
+                newDeckDictionary[deckName] = 
+                {
+                    series: seriesName, 
+                    character: characterName, 
+                    color: color
+                }
+            }
+            
+            
+            //display
+            var resulttextarea = document.createElement('textarea')
+            resulttextarea.value = "export var deckDictionary = " + JSON.stringify(newDeckDictionary);
+            // pretty output ver: resulttextarea.value = "var deckDictionary = " + JSON.stringify(deckDictionary, null, 1);
+            
+            document.getElementById("tooloutput").appendChild(resulttextarea)
+        }
+
 function showPortfolio(type){
     
 }
 
 function sortPiles(){
     collection.piles.all.forEach( card => {
-        var [needed, section] = isNeeded(card)
-        collection.piles[section].unshift(card);
+        var [needed, pilenames] = isNeeded(card)
+        pilenames.forEach( pileName => {
+            if (pileName != 'trading'){
+                if (collection.piles.bypile[pileName] === undefined){
+                    collection.piles.bypile[pileName] = [];
+                }
+                collection.piles.bypile[pileName].unshift(card);
+                collection.piles.keeping.unshift(card);
+            }
+            else{
+                collection.piles.trading.unshift(card);
+            }
+        })
     })
+    return collection.piles;
 }
 
-function strToArray(cardString){
-    var split = cardString.replaceAll(" ", "").split(",");
+function strToArray(string){
+    var split = string.replaceAll(" ", "").split(",");
     if (split.length == 1 && split[0] == ''){
         return [];
     }
