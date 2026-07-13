@@ -104,7 +104,7 @@ export const ComponentLib = {
 
     neededdeckstextarea: (collection, input) => {
         var textarea = document.createElement("textarea");
-        var decks = getNeededCards(collection)[1].join(", ")
+        var decks = collection.piles.deckNeeds.join(", ")
         if (decks == '') { decks = "None." }
         textarea.innerHTML =
         `${decks}`
@@ -118,14 +118,14 @@ export const ComponentLib = {
     },
 
     neededsinglecardstext: (collection, input) => {
-        var cards = getNeededCards(collection)[2].join(", ")
+        var cards = collection.piles.singleNeeds.join(", ")
         if (cards == '') { cards = "None." }
         document.querySelector("[data-name='neededsinglecardstext']").innerHTML =
         `${cards}`
     },
     neededsinglecardstextarea: (collection, input) => {
         var textarea = document.createElement("textarea");
-        var cards = getNeededCards(collection)[2].join(", ");
+        var cards = collection.piles.singleNeeds.join(", ")
         if (cards == '') { cards = "None." }
         textarea.innerHTML =
         `${cards}`
@@ -133,14 +133,14 @@ export const ComponentLib = {
     },
 
     neededcardstext: (collection, input) => {
-        var cards = getNeededCards(collection)[0].join(", ")
+        var cards = collection.piles.allNeeds.join(", ")
         if (cards == '') { cards = "None." }
         document.querySelector("[data-name='neededcardstext']").innerHTML =
         `${cards}`
     },
     neededcardstextarea: (collection, input) => {
         var textarea = document.createElement("textarea");
-        var cards = getNeededCards(collection)[0].join(", ")
+        var cards = collection.piles.allNeeds.join(", ")
         if (cards == '') { cards = "None." }
         textarea.innerHTML =
         `${cards}`
@@ -192,6 +192,14 @@ export const ComponentLib = {
         var span = document.querySelector("[data-name='pilecardsnew'][data-input='"+input+"']")
         span.appendChild(div);
     },
+
+    paginatedpile: (collection, input) => {
+        console.log(collection.piles.trading);
+    },
+
+    pileSearchBar: (collection, input) => {
+
+    }
 
 
 }
@@ -283,7 +291,7 @@ function displayDeck(collection, deck, master=false){
 }
 
 function displayNeededDecks(collection){
-    var neededDecks = getNeededCards(collection)[1];
+    var neededDecks = collection.piles.deckNeeds;
     
     var redDiv = document.createElement("div");
     var orangeDiv = document.createElement("div");
@@ -392,21 +400,6 @@ function getDeckCards(deck){
     return cards;
 }
 
-function getMasteries(collection, input){
-    var ownedCards = collection.piles.all;
-    var uniqueOwned = removeDuplicates(ownedCards);
-    var mastered = [];
-    uniqueOwned.forEach( currCard => {
-        var deckName = currCard.substring(0, currCard.length-2);
-        var owned = uniqueOwned.filter( card => card.substring(0, card.length-2) == deckName)
-        if (owned.length >= 20){
-            mastered.push(deckName)
-        }
-        uniqueOwned = uniqueOwned.filter(card => card.substring(0, card.length-2) != deckName)
-    })
-    return mastered;
-}
-
 function getDeckNeeds(collection, deck){
     var ownedCards = collection.piles.all.sort();
     var deckCards = getDeckCards(deck);
@@ -433,52 +426,6 @@ function getLevel(collection, input){
         level = levels[limits[index - 1]];
     }
     return [cardCount, level];
-}
-
-function getPileNeeds(collection, pile){
-    var ownedCards = collection.piles.all.sort();
-    var mastered = getMasteries(collection);
-    var needs = pile.cards.filter(card => !ownedCards.includes(card));  
-    var neededSingleCards = needs;
-    var neededDecks = pile.decks;
-    pile.series.forEach( (series) => {
-        neededDecks = neededDecks.concat(getSeriesDecks(series));
-    })
-    neededDecks.forEach( (deck) => {
-        //check if mastered
-        if (!mastered.includes(deck)){
-            needs = needs.concat(getDeckNeeds(collection, deck));
-        }
-    })
-    return [needs, neededDecks, neededSingleCards];
-}
-
-function getNeededCards(collection){
-    var allNeeds = [];
-    var allDeckNeeds = [];
-    var allSingleCardNeeds = [];
-
-    // needs of piles
-    var pileNeeds = collection.piles.piledefs.map( pile => {
-        var [needs, deckNeeds, singleNeeds] = getPileNeeds(collection, pile);
-        allNeeds = allNeeds.concat(needs);
-        allDeckNeeds = allDeckNeeds.concat(deckNeeds);
-        allSingleCardNeeds.concat(singleNeeds)
-        return needs;
-    })
-
-    // remove duplicates
-    allNeeds = removeDuplicates(allNeeds);
-    allDeckNeeds = removeDuplicates(allDeckNeeds);
-    allSingleCardNeeds = removeDuplicates(allSingleCardNeeds);
-
-    return  [allNeeds, allDeckNeeds, allSingleCardNeeds]
-}
-
-
-function getSeriesDecks(series){
-    var decks  = Object.fromEntries(Object.entries(deckDictionary).filter((deck) => deck[1].series == series));
-    return Object.keys(decks);
 }
 
 function removeDuplicates(set){

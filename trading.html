@@ -17,8 +17,80 @@
             <div>
                 
             </div>
-            <div>
+            
+            <div style="width: 1400px;margin: auto;">
+                <p>trading</p>
+                <div>
+                    
+                    <p style="display:inline-block;">show color:</p>
+
+                    <div>
+                        <p>Filter by:</p>
+                        <div id="multiselect-Colors" class="multiselect">
+                            <div class="selectInput">
+                                <button type="button">
+                                    Colors ▾
+                                </button>
+                                <div class="allSelections"></div>
+                            </div>
+                            <div class="selectOptions">
+                                <label for="showred">
+                                    <input type="checkbox" id="showred" value="red" >
+                                    red
+                                </label>
+                                <label for="showorange">
+                                    <input type="checkbox" id="showorange" value="orange">
+                                    orange
+                                </label>
+                                <label for="showyellow">
+                                    <input type="checkbox" id="showyellow" value="yellow" >
+                                    yellow
+                                </label>
+                                <label for="showgreen">
+                                    <input type="checkbox" id="showgreen" value="green" >
+                                    green
+                                </label>
+                                <label for="showblue">
+                                    <input type="checkbox" id="showblue" value="blue" >
+                                    blue
+                                </label>
+                                <label for="showpurple">
+                                    <input type="checkbox" id="showpurple" value="purple" >
+                                    purple
+                                </label>
+                                <label for="showbrown">
+                                    <input type="checkbox" id="showbrown" value="brown" >
+                                    brown
+                                </label>
+                                <label for="showgrey">
+                                    <input type="checkbox" id="showgrey" value="grey" >
+                                    grey
+                                </label>
+                                <label for="showspecial">
+                                    <input type="checkbox" id="showspecial" value="special" >
+                                    special
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--<p style="display:inline-block; margin-left: 40px;">sort by</p>
+                    <input type="radio" id="sortbyall" name= "input" value="sort" checked>
+                    <label for="sortbyall">all</label>
+                    <input type="radio" id="sortbycolors" name= "input" value="sort">
+                    <label for="sortbycolors">colors</label>
+                    <input type="radio" id="sortbyseries" name= "input" value="sort">
+                    <label for="sortbyseries">series</label>-->
+                    
+                    <p>search by card name, deck name, or series:</p>
+                    <input id="searchbar" onkeyup="filter()" type="text"
+                    name="search" placeholder="search...">
+                    
+                </div>
             </div>
+
+            <span class="neotcg" data-name="paginatedpile" data-input="trading"></span>
+
         </div>
 
     </body>

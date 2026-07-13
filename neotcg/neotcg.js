@@ -13,8 +13,15 @@ var collection =
         trading: [],
         keeping: [],
         bypile: {},
-        piledefs: CollectionInput.piles
+        piledefs: CollectionInput.piles,
+        
+        bypileNeeds: {},
+        allNeeds: [],
+        deckNeeds: [],
+        singleNeeds: [],
     },
+
+    masteries: [],
 
     crayons: ArchiveInput.crayons,
 
@@ -78,10 +85,12 @@ window.onload = () => {
     document.querySelector('#toolscraperprocess')?.addEventListener('click', () => {
         scrapeColorsTCGData();
     });
-
     document.querySelector('#toolresetoutput')?.addEventListener('click', () => {
         resetToolOutput();
     });
+
+
+    setMultiSelect("selectBox-Colors", "multiselectoption-Colors");
 
 }
 
@@ -95,6 +104,26 @@ function setup(){
 
     readLogs();
     sortPiles();
+    getNeeds();
+    getMasteries();
+}
+
+
+function setMultiSelect(){
+    var multiSelect = document.querySelector('.multiselect');
+    var input = document.querySelector('.selectInput');
+    var options = document.querySelector('.selectOptions');
+
+    multiSelect?.addEventListener('mouseover', (e) => {
+        e.stopPropagation();
+        options.style.display = "block"
+    })
+
+    multiSelect?.addEventListener('mouseleave', (e) => {
+        e.stopPropagation();
+        options.style.display = "none"
+    })
+
 
 }
 
@@ -174,6 +203,10 @@ function getCardDeckName(card){
 }
 
 function getDeckSeriesName(deck){
+    if (deckDictionary[deck] === undefined){
+        collection.errors.push('Cannot find deck: ' + deck)
+        console.log(deck)
+    }
     return deckDictionary[deck].series;
 }
 
@@ -182,6 +215,79 @@ function getKeepingCards(){
 
 function getLogs(){
     return collection.logs;
+}
+
+function getMasteries(){
+    var ownedCards = collection.piles.all;
+    var uniqueOwned = removeDuplicates(ownedCards);
+    var mastered = [];
+    uniqueOwned.forEach( currCard => {
+        var deckName = currCard.substring(0, currCard.length-2);
+        var owned = uniqueOwned.filter( card => card.substring(0, card.length-2) == deckName)
+        if (owned.length >= 20){
+            mastered.push(deckName)
+        }
+        uniqueOwned = uniqueOwned.filter(card => card.substring(0, card.length-2) != deckName)
+    })
+    collection.masteries = mastered;
+    return mastered;
+}
+
+function getNeeds(){
+    var ownedCards = collection.piles.all.sort();
+    var allNeeds = []
+    var allDeckNeeds = []
+    var allSingleNeeds = []
+
+    collection.piles.piledefs.forEach( pile => {
+        var pileNeeds = [];
+
+        var pileSingleNeeds = pile.cards.filter(card => !ownedCards.includes(card));  
+        var pileDeckNeeds = pile.decks.filter(deck => !collection.masteries.includes(deck))
+
+        pile.series.forEach( (series) => {
+            pileDeckNeeds = pileDeckNeeds.concat(getSeriesDecks(series));
+        })
+        pileDeckNeeds.forEach( (deck) => {
+            //check if mastered
+            if (!collection.masteries.includes(deck)){
+                var currDeckNeeds = [];
+                for (var index = 1; index < 21; index++){
+                    var cardNumber = ''
+                    if (index < 10){ cardNumber = "0"+index}
+                    else {cardNumber += index;}
+                    
+                    if (!ownedCards.includes(deck + cardNumber)){
+                        pileNeeds.push(deck + cardNumber);
+                    }
+                }
+            }
+        })
+
+        allSingleNeeds = allSingleNeeds.concat(pileSingleNeeds);
+        allDeckNeeds = allDeckNeeds.concat(pileDeckNeeds);
+        allNeeds = allNeeds.concat(pileNeeds);
+
+        pileNeeds = pileNeeds.concat(pileSingleNeeds)
+
+        collection.piles.bypileNeeds[pile.name] = pileNeeds;
+    })
+
+    // remove duplicates
+    allNeeds = removeDuplicates(allNeeds);
+    allDeckNeeds= removeDuplicates(allDeckNeeds);
+    allSingleNeeds = removeDuplicates(allSingleNeeds);
+
+    collection.piles.allNeeds = allNeeds;
+    collection.piles.deckNeeds = allDeckNeeds;
+    collection.piles.singleNeeds = allSingleNeeds
+
+    return [allNeeds, allDeckNeeds, allSingleNeeds];
+}
+
+function getSeriesDecks(series){
+    var decks  = Object.fromEntries(Object.entries(deckDictionary).filter((deck) => deck[1].series == series));
+    return Object.keys(decks);
 }
 
 function isNeeded(card){
@@ -213,52 +319,59 @@ function readLogs(){
         log = log.toLowerCase()
 
         //scrape logs
-        var receiveStart = log.indexOf(":") + 1;
-        var receiveEnd = log.length;
-        var lostStart = log.indexOf(":") + 1;
-        var lostEnd = log.length;
-        var received = [];
-        var lost = [];
-        var countForSketchpad = false;
+        if (log.includes(":")){
 
-        //read logs
-        if (log.includes("received from") || (log.includes("gifted by"))){
-            received = log.substring(receiveStart, receiveEnd).split(",");
-        }
-        else if (log.includes("gifted to")){
-            lost = log.substring(lostStart, lostEnd).split(",");
-            countForSketchpad = true;
-        }
-        else if (log.includes("lost to")){
-            lost = log.substring(lostStart, lostEnd).split(",");
-        }
-        else if (log.includes("traded to")){
-            var breakIndex = log.lastIndexOf(" for ");
-            lostStart = log.indexOf(":") + 1;
-            lostEnd = breakIndex;
-            receiveStart = breakIndex + 5;
-            receiveEnd = log.length;
+            var receiveStart = log.lastIndexOf(":") + 1;
+            var receiveEnd = log.length;
+            var lostStart = log.lastIndexOf(":") + 1;
+            var lostEnd = log.length;
+            var received = [];
+            var lost = [];
+            var countForSketchpad = false;
 
-            received = log.substring(receiveStart, receiveEnd).split(",");
-            lost = log.substring(lostStart, lostEnd).split(",");
-            countForSketchpad = true;
-        }
+            //read logs
+            if (log.includes("received from") || (log.includes("gifted by"))){
+                received = log.substring(receiveStart, receiveEnd).split(",");
+            }
+            else if (log.includes("gifted to")){
+                lost = log.substring(lostStart, lostEnd).split(",");
+                countForSketchpad = true;
+            }
+            else if (log.includes("lost to")){
+                lost = log.substring(lostStart, lostEnd).split(",");
+            }
+            else if (log.includes("traded to")){
+                var breakIndex = log.lastIndexOf(" for ");
+                lostStart = log.indexOf(":") + 1;
+                lostEnd = breakIndex;
+                receiveStart = breakIndex + 5;
+                receiveEnd = log.length;
 
-        //edit collection
-        received.forEach( tradeItem => {
-            tradeItem = tradeItem.trim().toLowerCase();
-            editCollection(tradeItem)
-        })
+                received = log.substring(receiveStart, receiveEnd).split(",");
+                lost = log.substring(lostStart, lostEnd).split(",");
+                countForSketchpad = true;
+            }
+            else{
+                collection.errors.push('Incorrect log: ' + log)
+                console.log(log)
+            }
 
-        lost.forEach( tradeItem => {
-            tradeItem = tradeItem.trim().toLowerCase();
-            editCollection(tradeItem, false)
-        });
+            //edit collection
+            received.forEach( tradeItem => {
+                tradeItem = tradeItem.trim().toLowerCase();
+                editCollection(tradeItem)
+            })
 
-        
-        // add sketchpad points
-        if (countForSketchpad){
-            collection.sketchpadPoints += lost.length;
+            lost.forEach( tradeItem => {
+                tradeItem = tradeItem.trim().toLowerCase();
+                editCollection(tradeItem, false)
+            });
+
+            
+            // add sketchpad points
+            if (countForSketchpad){
+                collection.sketchpadPoints += lost.length;
+            }
         }
 
     })
@@ -268,53 +381,57 @@ function readLogs(){
     collection.sketchpadPoints = collection.sketchpadPoints % 20
 }
 
+function removeDuplicates(set){
+    return [...new Set(set)]
+}
+
 function resetToolOutput(){
     document.getElementById('tooloutput').innerHTML = '';
 }
 
 async function scrapeColorsTCGData(){
-            var data = await document.getElementById("htmlinput").files[0].text();
-            var converter = document.createElement('div');
-            converter.innerHTML = data;
-            
-            // grab data row
-            var colorsTable = converter.querySelector("#colors")
-            var dataRows = colorsTable.getElementsByTagName("tr");
-            
-            //create dictionary
-            var newDeckDictionary = {};
-            for (var index = 1; index < dataRows.length; index++){ // remove color series etc table header
-                var dataRow = dataRows[index]
-                var dataCells = dataRow.getElementsByTagName("td");
-                var seriesName = dataCells[0].innerText;
-                var characterName = dataCells[1].innerText;
-                var deckName = dataCells[2].innerText.toLowerCase().replaceAll(" ", '').replace(/[àáâãäå]/g,"a")
-                                                                                        .replace(/[èéêë]/g,"e")
-                                                                                        .replace(/[ìíîï]/g,"i")
-                                                                                        .replace(/[òóôöõ]/g,"o")
-                                                                                        .replace(/[ùúûü]/g,"u")
-                                                                                        .replace(/[ýÿ]/g,"u")
-                                                                                        .replace(/[ç]/g,"c")
-                                                                                        .replace(/[ñ]/g,"n")
-                                                                                        .replace(/[^a-z0-9-]/g,'');
-                var color = dataCells[3].innerText;
-                // add to dictionary deckname: [seriesname, color, charactername]
-                newDeckDictionary[deckName] = 
-                {
-                    series: seriesName, 
-                    character: characterName, 
-                    color: color
-                }
-            }
-            
-            
-            //display
-            var resulttextarea = document.createElement('textarea')
-            resulttextarea.value = "export var deckDictionary = " + JSON.stringify(newDeckDictionary);
-            // pretty output ver: resulttextarea.value = "var deckDictionary = " + JSON.stringify(deckDictionary, null, 1);
-            
-            document.getElementById("tooloutput").appendChild(resulttextarea)
+    var data = await document.getElementById("htmlinput").files[0].text();
+    var converter = document.createElement('div');
+    converter.innerHTML = data;
+    
+    // grab data row
+    var colorsTable = converter.querySelector("#colors")
+    var dataRows = colorsTable.getElementsByTagName("tr");
+    
+    //create dictionary
+    var newDeckDictionary = {};
+    for (var index = 1; index < dataRows.length; index++){ // remove color series etc table header
+        var dataRow = dataRows[index]
+        var dataCells = dataRow.getElementsByTagName("td");
+        var seriesName = dataCells[0].innerText;
+        var characterName = dataCells[1].innerText;
+        var deckName = dataCells[2].innerText.toLowerCase().replaceAll(" ", '').replace(/[àáâãäå]/g,"a")
+                                                                                .replace(/[èéêë]/g,"e")
+                                                                                .replace(/[ìíîï]/g,"i")
+                                                                                .replace(/[òóôöõ]/g,"o")
+                                                                                .replace(/[ùúûü]/g,"u")
+                                                                                .replace(/[ýÿ]/g,"u")
+                                                                                .replace(/[ç]/g,"c")
+                                                                                .replace(/[ñ]/g,"n")
+                                                                                .replace(/[^a-z0-9-]/g,'');
+        var color = dataCells[3].innerText;
+        // add to dictionary deckname: [seriesname, color, charactername]
+        newDeckDictionary[deckName] = 
+        {
+            series: seriesName, 
+            character: characterName, 
+            color: color
         }
+    }
+    
+    
+    //display
+    var resulttextarea = document.createElement('textarea')
+    resulttextarea.value = "export var deckDictionary = " + JSON.stringify(newDeckDictionary);
+    // pretty output ver: resulttextarea.value = "var deckDictionary = " + JSON.stringify(deckDictionary, null, 1);
+    
+    document.getElementById("tooloutput").appendChild(resulttextarea)
+}
 
 function showPortfolio(type){
     
@@ -322,19 +439,24 @@ function showPortfolio(type){
 
 function sortPiles(){
     collection.piles.all.forEach( card => {
-        var [needed, pilenames] = isNeeded(card)
-        pilenames.forEach( pileName => {
-            if (pileName != 'trading'){
-                if (collection.piles.bypile[pileName] === undefined){
-                    collection.piles.bypile[pileName] = [];
+        if (card.includes('sig_') || (card.includes("master") && card != "master")){
+            collection.piles.keeping.unshift(card);
+        }
+        else{
+            var [needed, pilenames] = isNeeded(card)
+            pilenames.forEach( pileName => {
+                if (pileName != 'trading'){
+                    if (collection.piles.bypile[pileName] === undefined){
+                        collection.piles.bypile[pileName] = [];
+                    }
+                    collection.piles.bypile[pileName].unshift(card);
+                    collection.piles.keeping.unshift(card);
                 }
-                collection.piles.bypile[pileName].unshift(card);
-                collection.piles.keeping.unshift(card);
-            }
-            else{
-                collection.piles.trading.unshift(card);
-            }
-        })
+                else{
+                    collection.piles.trading.unshift(card);
+                }
+            })
+        }
     })
     return collection.piles;
 }

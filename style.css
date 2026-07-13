@@ -70,6 +70,7 @@ img{
     width: 900px;
     padding: 15px;
     background-color: var(--maincolor);
+    overflow: auto;
 }
 #navbar{
     display:flex; 
@@ -101,6 +102,31 @@ span[data-name="crayons"] > div{
     flex-direction: column; 
     text-align: center; 
     margin-right: 5px;
+}
+
+
+/* INPUTS */
+
+.multiselect{
+    width: max-content;
+}
+
+.selectOptions {
+    position: absolute;
+    display: none;
+    border: 0.5px #7c7c7c solid;
+    padding: 4px;
+    background-color: #ffffff;
+    width: fit-content;
+}
+
+.selectOptions label {
+    display: block;
+    padding-right: 5px;
+}
+
+.selectOptions label:hover {
+    background-color: grey;
 }
 
 
